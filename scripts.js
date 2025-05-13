@@ -1,3 +1,4 @@
+// Low Head Dam Fatalities Tracker - Main JavaScript
 // Using a clean architecture approach with modular design patterns
 
 // -------------------- DATA LAYER --------------------
@@ -11,6 +12,7 @@ const DataService = (function() {
         try {
             const response = await fetch(DATA_URL);
             const json = await response.json();
+
             // Process each dam to sort incidents by date (newest first)
             json.dams.forEach(dam => {
                 if (dam.incidents && dam.incidents.length > 0) {
@@ -22,6 +24,7 @@ const DataService = (function() {
                     });
                 }
             });
+
             return json.dams;
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -33,21 +36,25 @@ const DataService = (function() {
     function parseDateString(dateStr) {
         // Try to handle various date formats
         if (!dateStr) return new Date(0); // Default to ancient date if missing
+
         // Handle MM/DD/YYYY or MM-DD-YYYY
-        const usMatch = dateStr.match(/^(\\d{1,2})[\\/\\-](\\d{1,;
+        const usMatch = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
         if (usMatch) {
             return new Date(`${usMatch[3]}-${usMatch[1].padStart(2, '0')}-${usMatch[2].padStart(2, '0')}`);
         }
+
         // Handle YYYY-MM-DD (ISO)
-        const isoMatch = dateStr.match(/^(\\d{4})\\/\\-\\/\\-$/);
+        const isoMatch = dateStr.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
         if (isoMatch) {
             return new Date(dateStr);
         }
+
         // Try to parse directly (for "Month Day, Year" format)
         const date = new Date(dateStr);
         if (!isNaN(date.getTime())) {
             return date;
         }
+
         // Default if nothing works
         console.warn(`Could not parse date: ${dateStr}`);
         return new Date(0);
@@ -69,12 +76,15 @@ const DataService = (function() {
             damData = await fetchData();
             return damData;
         },
+
         getData: function() {
             return damData;
         },
+
         getDamById: function(id) {
             return damData.find(dam => dam.id === id);
         },
+
         getSortedDams: function(sortBy = 'fatalities', order = 'desc') {
             return [...damData].sort((a, b) => {
                 if (order === 'desc') {
@@ -84,6 +94,7 @@ const DataService = (function() {
                 }
             });
         },
+
         searchDams: function(criteria) {
             return damData.filter(dam => {
                 // Basic text search
@@ -92,6 +103,7 @@ const DataService = (function() {
                     const nameMatch = dam.name.toLowerCase().includes(searchTerm);
                     const locationMatch = dam.location.toLowerCase().includes(searchTerm);
                     const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+
                     // Check incidents descriptions
                     let descriptionMatch = false;
                     if (dam.incidents && dam.incidents.length > 0) {
@@ -99,39 +111,48 @@ const DataService = (function() {
                             incident.description && incident.description.toLowerCase().includes(searchTerm)
                         );
                     }
+
                     if (!(nameMatch || locationMatch || countyMatch || descriptionMatch)) {
                         return false;
                     }
                 }
+
                 // Fatality count range search
                 if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
                     const minFatalities = criteria.minFatalities !== undefined ? parseInt(criteria.minFatalities) : 0;
                     const maxFatalities = criteria.maxFatalities !== undefined ? parseInt(criteria.maxFatalities) : Infinity;
+
                     if (dam.fatalities < minFatalities || dam.fatalities > maxFatalities) {
                         return false;
                     }
                 }
+
                 // Date range search - check if any incident falls within the range
                 if (criteria.startDate || criteria.endDate) {
                     // If dam has no incidents, it doesn't match date range criteria
                     if (!dam.incidents || dam.incidents.length === 0) {
                         return false;
                     }
+
                     const startDate = criteria.startDate ? new Date(criteria.startDate) : new Date(0);
                     const endDate = criteria.endDate ? new Date(criteria.endDate) : new Date(9999, 11, 31);
+
                     // Check if at least one incident falls within the date range
                     const hasIncidentInRange = dam.incidents.some(incident => {
                         const incidentDate = parseDateString(incident.date);
                         return incidentDate >= startDate && incidentDate <= endDate;
                     });
+
                     if (!hasIncidentInRange) {
                         return false;
                     }
                 }
+
                 // If passed all filters
                 return true;
             });
         },
+
         // Utility function exposed for date parsing elsewhere
         parseDateString: parseDateString
     };
@@ -151,6 +172,7 @@ const UIController = (function() {
         maxFatalities: document.getElementById('maxFatalities'),
         siteWithMostFatalities: document.getElementById('siteWithMostFatalities'),
         avgFatalitiesPerSite: document.getElementById('avgFatalitiesPerSite'),
+
         // Advanced search elements
         advancedSearchBtn: document.getElementById('advancedSearchBtn'),
         advancedSearchPanel: document.getElementById('advancedSearchPanel'),
@@ -162,7 +184,8 @@ const UIController = (function() {
         keywordSearch: document.getElementById('keywordSearch'),
         applyAdvancedSearch: document.getElementById('applyAdvancedSearch'),
         resetAdvancedSearch: document.getElementById('resetAdvancedSearch'),
-        activeFilters: document.getElementById('activeFilters')
+        activeFilters: document.getElementById('activeFilters'),
+        paginationControls: document.getElementById('paginationControls')
     };
 
     // Private methods
@@ -174,15 +197,18 @@ const UIController = (function() {
         // Create dam header with name, location and toggle button
         const damHeader = document.createElement('div');
         damHeader.className = 'dam-header';
+
         const damInfo = document.createElement('div');
         damInfo.innerHTML = `
             <div class="dam-name">${dam.name}</div>
             <div class="dam-location">${dam.location}${dam.county ? ' - ' + dam.county : ''}</div>
             <div class="dam-fatalities">${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
         `;
+
         const toggleIndicator = document.createElement('span');
         toggleIndicator.className = 'toggle-indicator';
         toggleIndicator.innerHTML = '▼';
+
         damHeader.appendChild(damInfo);
         damHeader.appendChild(toggleIndicator);
         damItem.appendChild(damHeader);
@@ -197,6 +223,7 @@ const UIController = (function() {
             incidentHeader.className = 'incident-header';
             incidentHeader.textContent = `Incident History (${dam.incidents.length} ${dam.incidents.length === 1 ? 'incident' : 'incidents'})`;
             incidentsContainer.appendChild(incidentHeader);
+
             dam.incidents.forEach(incident => {
                 const incidentCard = createIncidentCard(incident);
                 incidentsContainer.appendChild(incidentCard);
@@ -207,12 +234,14 @@ const UIController = (function() {
             noIncidents.textContent = 'No incident details available.';
             incidentsContainer.appendChild(noIncidents);
         }
+
         damItem.appendChild(incidentsContainer);
 
         // Add click event for toggling incidents
         damHeader.addEventListener('click', function(e) {
             e.stopPropagation();
             const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+
             // Lazy-load image ONLY after expand
             if (isVisible && dam.imageUrl && !damItem.querySelector('.dam-image')) {
                 const image = document.createElement('img');
@@ -222,6 +251,7 @@ const UIController = (function() {
                 damItem.insertBefore(image, incidentsContainer);
             }
         });
+
         return damItem;
     }
 
@@ -229,17 +259,17 @@ const UIController = (function() {
         const card = document.createElement('div');
         card.className = 'incident-card';
         let cardHtml = `
-            <div class="incident-date">${incident.date}</div>
-            <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
-            <div class="incident-description">${incident.description}</div>
+        <div class="incident-date">${incident.date}</div>
+        <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
+        <div class="incident-description">${incident.description}</div>
         `;
         // Append image if available
         if (incident.image) {
             const imagePath = `docs/assets/images/${incident.image}`;
             cardHtml += `
-                <div class="incident-image">
-                    <img src="${imagePath}" alt="Incident photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
-                </div>
+            <div class="incident-image">
+            <img src="${imagePath}" alt="Incident photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
+            </div>
             `;
         }
         // Documentation links (if any)
@@ -248,27 +278,27 @@ const UIController = (function() {
             docsHtml = '<div class="documentation-links">';
             if (incident.webDocumentation) {
                 docsHtml += `
-                    <a href="${incident.webDocumentation}" target="_blank" class="doc-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" y1="14" x2="21" y2="3"></line>
-                        </svg>
-                        Web Documentation
-                    </a>`;
+                <a href="${incident.webDocumentation}" target="_blank" class="doc-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Web Documentation
+                </a>`;
             }
             if (incident.fileDocumentation) {
                 docsHtml += `
-                    <a href="${incident.fileDocumentation}" target="_blank" class="doc-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        File Documentation
-                   >`;
+                <a href="${incident.fileDocumentation}" target="_blank" class="doc-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                File Documentation
+                </a>`;
             }
             docsHtml += '</div>';
         }
@@ -278,29 +308,31 @@ const UIController = (function() {
 
     function toggleIncidents(container, indicator) {
         const isVisible = container.classList.toggle('visible');
+
         if (isVisible) {
             indicator.classList.add('open');
             indicator.innerHTML = '▲';
         } else {
             indicator.classList.remove('open');
             indicator.innerHTML = '▼';
-       Visible;
+        }
+        return isVisible;
     }
 
     function createPopupContent(dam) {
         let content = `<div class="marker-popup">
-            <h3>${dam.name}</h3>`;
+        <h3>${dam.name}</h3>`;
         if (dam.imageUrl) {
             content += `<div class="popup-image" id="popup-image-${dam.id}"></div>`;
         }
         content += `
-            <p><strong>Location:</strong> ${dam.location}</p>`;
+        <p><strong>Location:</strong> ${dam.location}</p>`;
         if (dam.county) {
             content += `<p><strong>County:</strong> ${dam.county}</p>`;
         }
         content += `
-            <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
-            <button onclick="AppController.showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
+        <p><strong>Fatalities:</strong> ${dam.fatalities}</p>
+        <button onclick="AppController.showDamDetails(${dam.id})" style="background-color: #3498db; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">View Incidents</button>
         </div>`;
         return content;
     }
@@ -310,18 +342,61 @@ const UIController = (function() {
         getDOMElements: function() {
             return DOMElements;
         },
+
         populateDamList: function(dams) {
             DOMElements.damList.innerHTML = '';
+
             dams.forEach(dam => {
                 const damItem = createDamListItem(dam);
                 DOMElements.damList.appendChild(damItem);
             });
         },
+
         createPopupContent: createPopupContent,
+
         updateStatistics: function(stats) {
             DOMElements.totalFatalities.textContent = stats.totalFatalities;
             DOMElements.fatalSites.textContent = stats.fatalSites;
-            DOMElements.maxFatalities.textContent = stats.max
+            DOMElements.maxFatalities.textContent = stats.maxFatalities;
+            DOMElements.siteWithMostFatalities.textContent = stats.siteWithMostFatalities;
+            DOMElements.avgFatalitiesPerSite.textContent = stats.avgFatalitiesPerSite;
+        },
+
+        highlightDamInList: function(damId) {
+            const listItems = document.querySelectorAll('.dam-item');
+
+            listItems.forEach(item => {
+                item.style.backgroundColor = '';
+
+                if (parseInt(item.dataset.damId) === damId) {
+                    item.style.backgroundColor = '#e3f2fd';
+                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // Find and expand the incidents container
+                    const incidentsContainer = item.querySelector('.dam-incidents-container');
+                    const toggleIndicator = item.querySelector('.toggle-indicator');
+
+                    if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
+                        toggleIncidents(incidentsContainer, toggleIndicator);
+                    }
+                }
+            });
+        },
+
+        hideLoading: function() {
+            DOMElements.loading.style.display = 'none';
+        },
+
+        updateLastUpdated: function() {
+            DOMElements.lastUpdated.textContent = new Date().toLocaleDateString();
+        },
+
+        showError: function(message) {
+            alert(message);
+        }
+    };
+})();
+
 // -------------------- MAP CONTROLLER --------------------
 const MapController = (function() {
     // Private variables
@@ -333,28 +408,36 @@ const MapController = (function() {
         initialize: function(mapElement) {
             // Center the map on the US
             map = L.map(mapElement).setView([39.8283, -98.5795], 4);
+
             // Add the tile layer (OpenStreetMap)
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+
             return map;
         },
+
         addMarkers: function(dams, popupContentCallback, markerClickCallback) {
             // Clear any existing markers
             markers.forEach(marker => marker.remove());
             markers = [];
+
             // Add markers for each dam
             dams.forEach(dam => {
                 const marker = L.marker([dam.latitude, dam.longitude])
                     .addTo(map)
                     .bindPopup(popupContentCallback(dam));
+
                 marker.damId = dam.id;
                 markers.push(marker);
+
                 // Event listener for popup open
                 marker.on('click', function() {
                     markerClickCallback(dam.id);
+
                     // Lazy-load dam image into popup after it opens
-                                           const container = document.getElementById(`popup-image-${dam.id}`);
+                    setTimeout(() => {
+                        const container = document.getElementById(`popup-image-${dam.id}`);
                         if (container && dam.imageUrl && container.childNodes.length === 0) {
                             const img = document.createElement('img');
                             img.src = `docs/assets/images/${dam.imageUrl}`;
@@ -364,8 +447,10 @@ const MapController = (function() {
                     }, 150); // Small delay to ensure DOM is ready
                 });
             });
+
             return markers;
         },
+
         filterMarkers: function(visibleDamIds) {
             markers.forEach(marker => {
                 if (visibleDamIds.includes(marker.damId)) {
@@ -377,10 +462,12 @@ const MapController = (function() {
                 }
             });
         },
+
         focusOnDam: function(damId, zoomLevel = 12) {
             const dam = DataService.getDamById(damId);
             if (dam) {
                 map.setView([dam.latitude, dam.longitude], zoomLevel);
+
                 // Find and open marker popup
                 const marker = markers.find(m => m.damId === damId);
                 if (marker) {
@@ -388,12 +475,15 @@ const MapController = (function() {
                 }
             }
         },
+
         getMap: function() {
             return map;
         },
+
         getMarkers: function() {
             return markers;
         },
+
         updateMarkerPopup: function(damId, content) {
             const marker = markers.find(m => m.damId === damId);
             if (marker) {
@@ -427,15 +517,19 @@ const PaginationController = (function() {
     function renderPaginationControls() {
         const container = document.getElementById('paginationControls');
         container.innerHTML = '';
+
         const totalPages = Math.ceil(filteredDams.length / PAGE_SIZE);
+
         const prevBtn = document.createElement('button');
         prevBtn.textContent = 'Previous';
+        prevBtn.className = 'pagination-btn';
         prevBtn.disabled = currentPage === 1;
         prevBtn.onclick = () => {
             currentPage--;
             updatePageDisplay(UIController);
         };
         container.appendChild(prevBtn);
+
         for (let i = 1; i <= totalPages; i++) {
             const pageBtn = document.createElement('button');
             pageBtn.textContent = i;
@@ -449,14 +543,17 @@ const PaginationController = (function() {
             };
             container.appendChild(pageBtn);
         }
+
         const nextBtn = document.createElement('button');
         nextBtn.textContent = 'Next';
+        nextBtn.className = 'pagination-btn';
         nextBtn.disabled = currentPage === totalPages;
         nextBtn.onclick = () => {
             currentPage++;
             updatePageDisplay(UIController);
         };
         container.appendChild(nextBtn);
+
         const pageInfo = document.createElement('div');
         pageInfo.style.marginTop = '10px';
         pageInfo.textContent = `Showing page ${currentPage} of ${totalPages}`;
@@ -487,18 +584,22 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
             const searchTerm = this.value.toLowerCase();
             performSearch({ text: searchTerm });
         });
+
         // Advanced search toggle
         DOM.advancedSearchBtn.addEventListener('click', function() {
             DOM.advancedSearchPanel.style.display = DOM.advancedSearchPanel.style.display === 'block' ? 'none' : 'block';
         });
+
         // Close advanced search
         DOM.closeAdvancedSearch.addEventListener('click', function() {
             DOM.advancedSearchPanel.style.display = 'none';
         });
+
         // Apply advanced search filters
         DOM.applyAdvancedSearch.addEventListener('click', function() {
             applyAdvancedSearch();
         });
+
         // Reset advanced search filters
         DOM.resetAdvancedSearch.addEventListener('click', function() {
             resetAdvancedSearch();
@@ -509,11 +610,14 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
     function performSearch(criteria) {
         // Apply search
         const filteredDams = dataService.searchDams(criteria);
+
         // Update UI with filtered dams
         PaginationController.setFilteredDams(filteredDams);
+
         // Update map markers
         const visibleDamIds = filteredDams.map(dam => dam.id);
         mapCtrl.filterMarkers(visibleDamIds);
+
         // Update active filters display
         updateActiveFilters(criteria);
     }
@@ -528,13 +632,16 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
             maxFatalities: DOM.fatalityMax.value || undefined,
             keywords: DOM.keywordSearch.value || undefined
         };
+
         // Combine keyword search with text search
         if (criteria.keywords) {
             criteria.text = criteria.text ? 
                 `${criteria.text} ${criteria.keywords}` : 
                 criteria.keywords;
         }
+
         performSearch(criteria);
+
         // Hide the advanced search panel
         DOM.advancedSearchPanel.style.display = 'none';
     }
@@ -547,6 +654,7 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
         DOM.fatalityMin.value = '';
         DOM.fatalityMax.value = '';
         DOM.keywordSearch.value = '';
+
         // Reset to basic search only
         performSearch({ text: DOM.searchInput.value.toLowerCase() });
     }
@@ -554,33 +662,38 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
     // Update active filters display
     function updateActiveFilters(criteria) {
         DOM.activeFilters.innerHTML = '';
+
         // Date range filter
         if (criteria.startDate || criteria.endDate) {
             const dateLabel = criteria.startDate && criteria.endDate ?
                 `Date: ${formatDate(criteria.startDate)} to ${formatDate(criteria.endDate)}` :
                 criteria.startDate ?
-                `Date: After ${formatDate(criteria.startDate)}` :
-                `Date: Before ${formatDate(criteria.endDate)}`;
+                    `Date: After ${formatDate(criteria.startDate)}` :
+                    `Date: Before ${formatDate(criteria.endDate)}`;
+
             addFilterTag(dateLabel, function() {
                 DOM.incidentStartDate.value = '';
                 DOM.incidentEndDate.value = '';
                 applyAdvancedSearch();
             });
         }
+
         // Fatality range filter
         if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
             const fatalityLabel = criteria.minFatalities !== undefined && criteria.maxFatalities !== undefined ?
                 `Fatalities: ${criteria.minFatalities} to ${criteria.maxFatalities}` :
                 criteria.minFatalities !== undefined ?
-                `Fatalities: Min ${criteria.minFatalities}` :
-                `Fatalities: Max ${criteria.maxFatalities}`;
+                    `Fatalities: Min ${criteria.minFatalities}` :
+                    `Fatalities: Max ${criteria.maxFatalities}`;
+
             addFilterTag(fatalityLabel, function() {
                 DOM.fatalityMin.value = '';
                 DOM.fatalityMax.value = '';
                 applyAdvancedSearch();
             });
         }
-                // Keyword filter (only if different from search input)
+
+        // Keyword filter (only if different from search input)
         if (criteria.keywords && criteria.keywords !== criteria.text) {
             addFilterTag(`Keywords: ${criteria.keywords}`, function() {
                 DOM.keywordSearch.value = '';
@@ -597,8 +710,10 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
             ${label}
             <button class="remove-filter">×</button>
         `;
+
         // Add remove filter event
         tag.querySelector('.remove-filter').addEventListener('click', removeCallback);
+
         DOM.activeFilters.appendChild(tag);
     }
 
@@ -613,18 +728,23 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
         let totalFatalities = 0;
         let mostDangerousDam = { name: '', fatalities: 0 };
         let damsWithFatalities = 0;
+
         dams.forEach(dam => {
             totalFatalities += dam.fatalities;
+
             if (dam.fatalities > 0) {
                 damsWithFatalities++;
             }
+
             if (dam.fatalities > mostDangerousDam.fatalities) {
                 mostDangerousDam = { name: dam.name, fatalities: dam.fatalities };
             }
         });
+
         // Calculate average fatalities per site (only for sites with fatalities)
         const avgFatalitiesPerSite = damsWithFatalities > 0 ? 
             (totalFatalities / damsWithFatalities).toFixed(1) : 0;
+
         return {
             totalFatalities,
             fatalSites: damsWithFatalities,
@@ -640,22 +760,28 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
             try {
                 // Initialize data
                 await dataService.initialize();
+
                 // Initialize map
                 mapCtrl.initialize(DOM.map);
+
                 // Add markers to map
                 mapCtrl.addMarkers(
                     dataService.getData(),
                     uiCtrl.createPopupContent,
                     this.highlightDam
                 );
+
                 // Calculate and display statistics
                 const stats = calculateStatistics();
                 uiCtrl.updateStatistics(stats);
+
                 // Populate dam list with sorted dams
                 const sortedDams = dataService.getSortedDams();
                 PaginationController.setFilteredDams(sortedDams);
+
                 // Setup event listeners
                 setupEventListeners();
+
                 // Update UI state
                 uiCtrl.hideLoading();
                 uiCtrl.updateLastUpdated();
@@ -664,12 +790,15 @@ const AppController = (function(dataService, uiCtrl, mapCtrl) {
                 uiCtrl.showError("There was an error loading the data. Please try again later.");
             }
         },
+
         highlightDam: function(damId) {
             uiCtrl.highlightDamInList(damId);
         },
+
         showDamDetails: function(damId) {
             // Focus map on the dam
             mapCtrl.focusOnDam(damId);
+
             // Highlight and scroll to the dam in the list
             uiCtrl.highlightDamInList(damId);
         }
@@ -682,10 +811,10 @@ window.AppController = AppController;
 // Open the Google Form for reporting incidents
 function openReportForm() {
     // Replace with your actual Google Form URL
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSfuBcrTwOhsHVn6hPtdDmvcEXAMU2a8Sozux8hXwc8tXETUIA/viewform?usp=dialog', '_blank');
-}
+	window.open('https://docs.google.com/forms/d/e/1FAIpQLSfuBcrTwOhsHVn6hPtdDmvcEXAMU2a8Sozux8hXwc8tXETUIA/viewform?usp=dialog', '_blank');
+        }
 
 // Initialize when the page loads
-window.addEventListener('load', function() {
-    AppController.init();
+   window.addEventListener('load', function() {
+       AppController.init();
 });
