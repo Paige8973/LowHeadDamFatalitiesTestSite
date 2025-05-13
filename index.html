@@ -4,30 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Low Head Dam Fatalities Tracker</title>
-    <!-- Link to external Leaflet CSS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-    <!-- Link to external CSS file for custom styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading screen -->
     <div class="loading">
         <div class="loading-text">Loading dam data...</div>
     </div>
 
-    
-    <!-- Header section -->
     <header>
         <h1>Low Head Dam Fatalities Tracker</h1>
         <p>Tracking incidents and fatalities at low head dams across the country</p>
     </header>
 
-    <!-- Map container -->
     <div class="map-container">
         <div id="map"></div>
     </div>
 
-    <!-- Statistics section -->
     <div class="stats-container">
         <div class="stat-box">
             <div id="totalFatalities" class="stat-number">0</div>
@@ -51,14 +45,12 @@
         </div>
     </div>
 
-    <!-- Search and report section -->
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search by name of dam, location, description...">
         <button class="advanced-search-btn" id="advancedSearchBtn">Advanced Search</button>
         <button class="add-incident-btn" onclick="openReportForm()">Report Incident</button>
     </div>
 
-    <!-- Advanced search panel -->
     <div class="advanced-search-panel" id="advancedSearchPanel">
         <div class="advanced-search-header">
             <h3>Advanced Search</h3>
@@ -92,28 +84,21 @@
         </div>
     </div>
 
-    <!-- Active filters display -->
     <div class="active-filters" id="activeFilters">
         <!-- Active filters will appear here -->
     </div>
 
-    <!-- Dam list -->
     <div class="dam-list" id="damList">
         <!-- Dam list items will be populated here -->
     </div>
 
-    <!-- Pagination controls -->
     <div id="paginationControls"></div>
 
-    <!-- Footer section -->
     <footer>
         <p>The Low Head Dam Fatalities Tracker is a public service project to raise awareness about the dangers of low head dams.</p>
         <p>Data last updated: <span id="lastUpdated">Loading...</span></p>
     </footer>
 
-    <!-- Link to external Leaflet JS library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-    <!-- Link to external JavaScript file for custom functionality -->
-    <script src="scripts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
