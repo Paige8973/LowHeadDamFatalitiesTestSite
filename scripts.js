@@ -8,29 +8,41 @@ const DataService = (function() {
     const DATA_URL = "https://script.google.com/macros/s/AKfycbzdrtrJ6KGUUCWCCaVwW0eYRBNq56YXeHckZkEzbrTuST3Q2yu2qKfkrKLZ2Y-x7etztw/exec";
 
     // Private methods
-    async function fetchData() {
-        try {
-            const response = await fetch(DATA_URL);
-            const json = await response.json();
-
-            // Process each dam to sort incidents by date (newest first)
-            json.dams.forEach(dam => {
-                if (dam.incidents && dam.incidents.length > 0) {
-                    // Sort incidents by date (newest first)
-                    dam.incidents.sort((a, b) => {
-                        const dateA = new Date(parseDateString(a.date));
-                        const dateB = new Date(parseDateString(b.date));
-                        return dateB - dateA;
-                    });
-                }
-            });
-
-            return json.dams;
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            throw new Error("Failed to fetch dam data");
+async function fetchData() {
+    try {
+        console.log("Fetching data from:", DATA_URL); // Add debug logging
+        const response = await fetch(DATA_URL);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const json = await response.json();
+        console.log("Data received:", json); // Add debug logging
+        
+        // Check if the response has the expected structure
+        if (!json || !json.dams || !Array.isArray(json.dams)) {
+            throw new Error("Invalid data structure: missing dams array");
+        }
+
+        // Process each dam to sort incidents by date (newest first)
+        json.dams.forEach(dam => {
+            if (dam.incidents && dam.incidents.length > 0) {
+                // Sort incidents by date (newest first)
+                dam.incidents.sort((a, b) => {
+                    const dateA = new Date(parseDateString(a.date));
+                    const dateB = new Date(parseDateString(b.date));
+                    return dateB - dateA;
+                });
+            }
+        });
+
+        return json.dams;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw new Error(`Failed to fetch dam data: ${error.message}`);
     }
+}
 
     // Helper function to parse date strings of various formats
     function parseDateString(dateStr) {
