@@ -5,7 +5,7 @@
 const DataService = (function() {
     // Private variables
     let damData = [];
-    const DATA_URL = "https://script.google.com/macros/s/AKfycbwdA7zSg1UWuDZ0AJyLS4YRPfBnXzVyDnT_cDW-je9prTChxPr3Cqq9P03i6KAWGH3Azg/exec";
+    const DATA_URL = "https://script.google.com/macros/s/AKfycbzdrtrJ6KGUUCWCCaVwW0eYRBNq56YXeHckZkEzbrTuST3Q2yu2qKfkrKLZ2Y-x7etztw/exec";
 
     // Private methods
     async function fetchData() {
