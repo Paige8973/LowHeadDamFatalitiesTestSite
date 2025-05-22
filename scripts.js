@@ -270,7 +270,7 @@
         
         if (isVisible) {
             // Add image if it doesn't exist
-            if (!damItem.querySelector('.dam-image')) {
+            if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {
                 const image = document.createElement('img');
                 image.src = `assets/images/${dam.imageUrl}`;
                 image.className = 'dam-image';
@@ -306,7 +306,7 @@
                     `;
                 }
                 // Append image if available
-                if (incident.image) {
+                if (incident.image && incident.image !== 'null' && incident.image.trim() !== '') {
                     const imagePath = `assets/images/${incident.image}`;
                     cardHtml += `
                     <div class="incident-image">
@@ -363,7 +363,7 @@
             function createPopupContent(dam) {
                 let content = `<div class="marker-popup">
                 <h3>${dam.name}</h3>`;
-                if (dam.imageUrl) {
+                if (dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
                     content += `<div class="popup-image" id="popup-image-${dam.id}"></div>`;
                 }
                 content += `
@@ -423,7 +423,7 @@
 
                             // Load dam image manually if necessary
                             const dam = DataService.getDamById(damId);
-                            if (isVisible && dam.imageUrl) {
+                            if (isVisible && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
                                 const existingImage = item.querySelector('.dam-image');
                                 if (!existingImage) {
                                     const image = document.createElement('img');
@@ -494,7 +494,7 @@
                             // Lazy-load dam image into popup after it opens
                             setTimeout(() => {
                                 const container = document.getElementById(`popup-image-${dam.id}`);
-                                if (container && dam.imageUrl && container.childNodes.length === 0) {
+                                if (container && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '' && container.childNodes.length === 0) {
                                     const img = document.createElement('img');
                                     img.src = `assets/images/${dam.imageUrl}`;
                                     img.style.cssText = 'max-width: 100%; border-radius: 4px; margin-bottom: 10px;';
