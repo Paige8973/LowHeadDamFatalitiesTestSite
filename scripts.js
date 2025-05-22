@@ -306,7 +306,7 @@
                 }
                 // Append image if available
                 if (incident.image) {
-                    const imagePath = `docs/assets/images/${incident.image}`;
+                    const imagePath = `assets/images/${incident.image}`;
                     cardHtml += `
                     <div class="incident-image">
                     <img src="${imagePath}" alt="Incident photo" style="max-width: 100%; border-radius: 4px; margin-bottom: 10px;">
@@ -426,7 +426,7 @@
                                 const existingImage = item.querySelector('.dam-image');
                                 if (!existingImage) {
                                     const image = document.createElement('img');
-                                    image.src = `docs/assets/images/${dam.imageUrl}`;
+                                    image.src = `assets/images/${dam.imageUrl}`;
                                     image.className = 'dam-image';
                                     image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
                                     item.insertBefore(image, incidentsContainer);
@@ -495,7 +495,7 @@
                                 const container = document.getElementById(`popup-image-${dam.id}`);
                                 if (container && dam.imageUrl && container.childNodes.length === 0) {
                                     const img = document.createElement('img');
-                                    img.src = `docs/assets/images/${dam.imageUrl}`;
+                                    img.src = `assets/images/${dam.imageUrl}`;
                                     img.style.cssText = 'max-width: 100%; border-radius: 4px; margin-bottom: 10px;';
                                     container.appendChild(img);
                                 }
