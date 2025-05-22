@@ -268,13 +268,13 @@
                     e.stopPropagation();
                     const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
 
-             if (!damItem.querySelector('.dam-image')) {
-                  const image = document.createElement('img');
-                  const basePath = '/LowHeadDamFatalitiesTestSite/'; // GitHub Pages repo path
-                  image.src = `${basePath}assets/images/${encodeURIComponent(dam.imageUrl)}`;
-                  image.className = 'dam-image';
-                  image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                  damItem.insertBefore(image, incidentsContainer);
+              // Add image if it doesn't exist
+                        if (!damItem.querySelector('.dam-image')) {
+                            const image = document.createElement('img');
+                            image.src = `assets/images/${dam.imageUrl}`;
+                            image.className = 'dam-image';
+                            image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                            damItem.insertBefore(image, incidentsContainer);
               }
 
                     } else {
