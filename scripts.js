@@ -273,7 +273,7 @@
                         // Add image if it doesn't exist
                         if (!damItem.querySelector('.dam-image')) {
                             const image = document.createElement('img');
-                            image.src = `assets/images/${dam.imageUrl}`;
+                            image.src = `/assets/images/${dam.imageUrl}`;
                             image.className = 'dam-image';
                             image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
                             damItem.insertBefore(image, incidentsContainer);
