@@ -273,7 +273,7 @@
                         // Add image if it doesn't exist
                         if (!damItem.querySelector('.dam-image')) {
                             const image = document.createElement('img');
-                            image.src = `LowHeadDamFatalitiesTestSite/assets/images/${dam.imageUrl}`;
+                            image.src = `'assets/images/Dock%20Street%20Dam%20-%20(site%2066).jpg'`;
                             image.className = 'dam-image';
                             image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
                             damItem.insertBefore(image, incidentsContainer);
