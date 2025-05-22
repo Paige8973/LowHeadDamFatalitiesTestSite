@@ -268,16 +268,15 @@
                     e.stopPropagation();
                     const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
 
-                    // Handle the dam image
-                    if (isVisible && dam.imageUrl) {
-                        // Add image if it doesn't exist
-                        if (!damItem.querySelector('.dam-image')) {
-                            const image = document.createElement('img');
-                            image.src = `'assets/images/Dock%20Street%20Dam%20-%20(site%2066).jpg'`;
-                            image.className = 'dam-image';
-                            image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                            damItem.insertBefore(image, incidentsContainer);
-                        }
+             if (!damItem.querySelector('.dam-image')) {
+                  const image = document.createElement('img');
+                  const basePath = '/LowHeadDamFatalitiesTestSite/'; // GitHub Pages repo path
+                  image.src = `${basePath}assets/images/${encodeURIComponent(dam.imageUrl)}`;
+                  image.className = 'dam-image';
+                  image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                  damItem.insertBefore(image, incidentsContainer);
+              }
+
                     } else {
                         // Remove image if it exists when closing
                         const existingImage = damItem.querySelector('.dam-image');
