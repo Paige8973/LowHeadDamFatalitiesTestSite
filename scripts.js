@@ -2,7 +2,7 @@
         const DataService = (function() {
             // Private variables
             let damData = [];
-            const DATA_URL = "https://script.google.com/macros/s/AKfycbzdrtrJ6KGUUCWCCaVwW0eYRBNq56YXeHckZkEzbrTuST3Q2yu2qKfkrKLZ2Y-x7etztw/exec";
+            const DATA_URL = "https://script.google.com/macros/s/AKfycby3g8xDQYI6gHTcu1r-8CY3dG3RpqMX__kiBQ5e6MldjrYJ_KWqgmzD-f2LqfR6E0py/exec";
             const stateMap = {
                     'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR',
                     'california': 'CA', 'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE',
@@ -896,7 +896,7 @@ showDamDetails: function(damId) {
 
         // Open the Google Form for reporting incidents
         function openReportForm() {
-            // Replace with your actual Google Form URL
+            // Google Form URL
             window.open('https://docs.google.com/forms/d/e/1FAIpQLSfuBcrTwOhsHVn6hPtdDmvcEXAMU2a8Sozux8hXwc8tXETUIA/viewform?usp=dialog', '_blank');
         }
 
