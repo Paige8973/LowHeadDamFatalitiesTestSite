@@ -297,14 +297,20 @@
                 <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 <div class="incident-description">${incident.description}</div>
                 `;
-                // Add validation link if available
-                if (incident.validation_webaddress) {
-                    cardHtml += `
-                    <div class="incident-validation">
-                    <a href="${incident.validation_webaddress}" target="_blank">View Source</a>
-                    </div>
-                    `;
-                }
+                 // Add validation link if available - check webaddress first, then file
+                     if (incident.validation_webaddress) {
+                         cardHtml += `
+                         <div class="incident-validation">
+                         <a href="${incident.validation_webaddress}" target="_blank">View Source</a>
+                         </div>
+                         `;
+                     } else if (incident.validation_file) {
+                         cardHtml += `
+                         <div class="incident-validation">
+                         <a href="${incident.validation_file}" target="_blank">View Source</a>
+                         </div>
+                         `;
+                     }
                 // Append image if available
                 if (incident.image && incident.image !== 'null' && incident.image.trim() !== '') {
                     const imagePath = `assets/images/${incident.image}`;
