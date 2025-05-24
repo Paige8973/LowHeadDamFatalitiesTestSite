@@ -305,12 +305,12 @@
                          </div>
                          `;
                      } else if (incident.validation_file) {
-                         cardHtml += `
-                         <div class="incident-validation">
-                         <a href="${incident.validation_file}" target="_blank">View Source</a>
-                         </div>
-                         `;
-                     }
+                        cardHtml += `
+                        <div class="incident-validation">
+                        <a href="assets/validation_uploads/${incident.validation_file}" target="_blank">View Source</a>
+                        </div>
+                        `;
+                    }
                 // Append image if available
                 if (incident.image && incident.image !== 'null' && incident.image.trim() !== '') {
                     const imagePath = `assets/images/${incident.image}`;
