@@ -490,10 +490,19 @@
                     markers = [];
 
                     // Add markers for each dam
-                    dams.forEach(dam => {
-                        const marker = L.marker([dam.latitude, dam.longitude])
-                            .addTo(map)
-                            .bindPopup(popupContentCallback(dam));
+                   dams.forEach(dam => {
+                       // Skip dams with missing or invalid coordinates
+                       if (
+                           dam.latitude === undefined || dam.longitude === undefined ||
+                           isNaN(dam.latitude) || isNaN(dam.longitude)
+                       ) {
+                           console.warn(`Skipping dam with invalid coordinates: ${dam.name || 'Unnamed'}`);
+                           return;
+                       }
+
+                       const marker = L.marker([dam.latitude, dam.longitude])
+                           .addTo(map)
+                           .bindPopup(popupContentCallback(dam));
 
                         marker.damId = dam.id;
                         markers.push(marker);
