@@ -379,6 +379,14 @@
                 }
                 content += `
                 <p><strong>Location:</strong> ${dam.location}</p>`;
+                    // NEW: Coordinates section
+                      const lat = Number(dam.latitude);
+                      const lng = Number(dam.longitude);
+                      if (!isNaN(lat) && !isNaN(lng)) {
+                          content += `<p><strong>Coordinates:</strong> ${lat.toFixed(4)}, ${lng.toFixed(4)}</p>`;
+                      } else {
+                          content += `<p><em>Coordinates unavailable</em></p>`;
+                      }
                 if (dam.county) {
                     content += `<p><strong>County:</strong> ${dam.county}</p>`;
                 }
