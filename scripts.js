@@ -49,32 +49,36 @@
             }
 
             // Helper function to parse date strings of various formats
-            function parseDateString(dateStr) {
-                // Try to handle various date formats
-                if (!dateStr) return new Date(0); // Default to ancient date if missing
+function parseDateString(dateStr) {
+    // Handle missing or invalid date strings
+    if (!dateStr || dateStr.trim() === '' || dateStr.toLowerCase() === 'unknown date') {
+        return new Date(0); // Default to ancient date if missing or unknown
+    }
 
-                // Handle MM/DD/YYYY or MM-DD-YYYY
-                const usMatch = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-                if (usMatch) {
-                    return new Date(`${usMatch[3]}-${usMatch[1].padStart(2, '0')}-${usMatch[2].padStart(2, '0')}`);
-                }
+    // Handle MM/DD/YYYY or MM-DD-YYYY
+    const usMatch = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (usMatch) {
+        return new Date(`${usMatch[3]}-${usMatch[1].padStart(2, '0')}-${usMatch[2].padStart(2, '0')}`);
+    }
 
-                // Handle YYYY-MM-DD (ISO)
-                const isoMatch = dateStr.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
-                if (isoMatch) {
-                    return new Date(dateStr);
-                }
+    // Handle YYYY-MM-DD (ISO)
+    const isoMatch = dateStr.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+    if (isoMatch) {
+        return new Date(dateStr);
+    }
 
-                // Try to parse directly (for "Month Day, Year" format)
-                const date = new Date(dateStr);
-                if (!isNaN(date.getTime())) {
-                    return date;
-                }
+    // Try to parse directly (for "Month Day, Year" format)
+    const date = new Date(dateStr);
+    if (!isNaN(date.getTime())) {
+        return date;
+    }
 
-                // Default if nothing works
-                console.warn(`Could not parse date: ${dateStr}`);
-                return new Date(0);
-            }
+    // Default if nothing works - only log warning for truly unexpected formats
+    if (dateStr.toLowerCase() !== 'unknown date') {
+        console.warn(`Could not parse date: ${dateStr}`);
+    }
+    return new Date(0);
+}
 
             // Extract date parts for filtering
             function extractDateParts(dateStr) {
