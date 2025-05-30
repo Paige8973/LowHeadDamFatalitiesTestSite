@@ -485,50 +485,53 @@
                 },
 
                 addMarkers: function(dams, popupContentCallback, markerClickCallback) {
-                    // Clear any existing markers
-                    markers.forEach(marker => marker.remove());
-                    markers = [];
+    // Clear any existing markers
+    markers.forEach(marker => marker.remove());
+    markers = [];
 
-                    // Add markers for each dam
-                   dams.forEach(dam => {
-                       // Skip dams with missing or invalid coordinates
-                       if (
-                              dam.latitude === undefined || dam.longitude === undefined ||
-                              dam.latitude === null || dam.longitude === null ||
-                              dam.latitude === '' || dam.longitude === '' ||
-                              isNaN(Number(dam.latitude)) || isNaN(Number(dam.longitude))
-                          ) {
-                              console.warn(`Skipping dam with invalid coordinates:`, dam);
-                              return;
-                          }
+    dams.forEach(dam => {
+        const lat = Number(dam.latitude);
+        const lng = Number(dam.longitude);
 
-                       const marker = L.marker([dam.latitude, dam.longitude])
-                           .addTo(map)
-                           .bindPopup(popupContentCallback(dam));
+        // Skip if lat/lng are not valid numbers
+        if (isNaN(lat) || isNaN(lng)) {
+            console.warn(`Skipping dam with invalid coordinates:`, dam);
+            return; // Skips to the next iteration correctly
+        }
 
-                        marker.damId = dam.id;
-                        markers.push(marker);
+        const marker = L.marker([lat, lng])
+            .addTo(map)
+            .bindPopup(popupContentCallback(dam));
 
-                        // Event listener for popup open
-                        marker.on('click', function() {
-                            markerClickCallback(dam.id);
+        marker.damId = dam.id;
+        markers.push(marker);
 
-                            // Lazy-load dam image into popup after it opens
-                            setTimeout(() => {
-                                const container = document.getElementById(`popup-image-${dam.id}`);
-                                if (container && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '' && container.childNodes.length === 0) {
-                                    const img = document.createElement('img');
-                                    img.src = `assets/images/${dam.imageUrl}`;
-                                    img.style.cssText = 'max-width: 100%; border-radius: 4px; margin-bottom: 10px;';
-                                    container.appendChild(img);
-                                }
-                            }, 150); // Small delay to ensure DOM is ready
-                        });
+        // Marker click behavior
+        marker.on('click', function() {
+            markerClickCallback(dam.id);
 
-                    });
+            // Lazy-load image
+            setTimeout(() => {
+                const container = document.getElementById(`popup-image-${dam.id}`);
+                if (
+                    container &&
+                    dam.imageUrl &&
+                    dam.imageUrl !== 'null' &&
+                    dam.imageUrl.trim() !== '' &&
+                    container.childNodes.length === 0
+                ) {
+                    const img = document.createElement('img');
+                    img.src = `assets/images/${dam.imageUrl}`;
+                    img.style.cssText = 'max-width: 100%; border-radius: 4px; margin-bottom: 10px;';
+                    container.appendChild(img);
+                }
+            }, 150);
+        });
+    });
 
-                    return markers;
-                },
+    return markers;
+},
+
 
                 filterMarkers: function(visibleDamIds) {
                     markers.forEach(marker => {
