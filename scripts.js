@@ -429,40 +429,41 @@
                     DOMElements.avgFatalitiesPerSite.textContent = stats.avgFatalitiesPerSite;
                 },
 
-                highlightDamInList: function(damId) {
-                    const listItems = document.querySelectorAll('.dam-item');
-
-                    listItems.forEach(item => {
-                        item.style.backgroundColor = '';
-
-                        if (parseInt(item.dataset.damId) === damId) {
-                            item.style.backgroundColor = '#e3f2fd';
-                            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                            // Find and expand the incidents container
+                highlightDamInList: function(damId, shouldExpand = false) {
+                const listItems = document.querySelectorAll('.dam-item');
+            
+                listItems.forEach(item => {
+                    item.style.backgroundColor = '';
+            
+                    if (parseInt(item.dataset.damId) === damId) {
+                        item.style.backgroundColor = '#e3f2fd';
+                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+                        // Only expand if explicitly requested
+                        if (shouldExpand) {
                             const incidentsContainer = item.querySelector('.dam-incidents-container');
                             const toggleIndicator = item.querySelector('.toggle-indicator');
-
-                        if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
-                            const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-
-                            // Load dam image manually if necessary
-                            const dam = DataService.getDamById(damId);
-                            if (isVisible && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
-                                const existingImage = item.querySelector('.dam-image');
-                                if (!existingImage) {
-                                    const image = document.createElement('img');
-                                    image.src = `assets/images/${dam.imageUrl}`;
-                                    image.className = 'dam-image';
-                                    image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                                    item.insertBefore(image, incidentsContainer);
+            
+                            if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
+                                const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+            
+                                // Load dam image manually if necessary
+                                const dam = DataService.getDamById(damId);
+                                if (isVisible && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
+                                    const existingImage = item.querySelector('.dam-image');
+                                    if (!existingImage) {
+                                        const image = document.createElement('img');
+                                        image.src = `assets/images/${dam.imageUrl}`;
+                                        image.className = 'dam-image';
+                                        image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                                        item.insertBefore(image, incidentsContainer);
+                                    }
                                 }
                             }
                         }
-
-                        }
-                    });
-                },
+                    }
+                });
+            },
 
                 hideLoading: function() {
                     DOMElements.loading.style.display = 'none';
@@ -522,7 +523,7 @@
 
         // Marker click behavior
         marker.on('click', function() {
-            markerClickCallback(dam.id);
+            markerClickCallback(dam.id, false); // Pass false to not expand
 
             // Lazy-load image
             setTimeout(() => {
@@ -898,9 +899,9 @@
                     }
                 },
 
-                highlightDam: function(damId) {
-                    uiCtrl.highlightDamInList(damId);
-                },
+                highlightDam: function(damId, shouldExpand = false) {
+                  uiCtrl.highlightDamInList(damId, shouldExpand);
+              },
 
 showDamDetails: function(damId) {
     const allDams = DataService.getSortedDams(); // Or getData() if not sorted
@@ -921,7 +922,7 @@ showDamDetails: function(damId) {
 
         // Scroll to and expand dam after rendering
         setTimeout(() => {
-            UIController.highlightDamInList(damId);
+            UIController.highlightDamInList(damId, true); // Pass true to expand
         }, 100);
     };
 
