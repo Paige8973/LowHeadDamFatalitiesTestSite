@@ -247,11 +247,10 @@ function parseDateString(dateStr) {
     damHeader.className = 'dam-header';
     const damInfo = document.createElement('div');
     damInfo.innerHTML = `
-        <div class="dam-name">${dam.name}</div>
-        <div class="dam-location">${dam.location}${dam.county ? ' - ' + dam.county : ''}</div>
-        ${dam.River_name && dam.River_name.trim() !== '' ? `<div class="dam-river"><strong>River:</strong> ${dam.River_name}</div>` : ''}
-        <div class="dam-fatalities">${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
-    `;
+         <div class="dam-name"> ${dam.name}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>
+        <div class="dam-location"> ${dam.location}${dam.county ? ' - ' + dam.county : ''} </div>
+    <div class="dam-fatalities"> ${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'} </div>
+`;
     const toggleIndicator = document.createElement('span');
     toggleIndicator.className = 'toggle-indicator';
     toggleIndicator.innerHTML = '▼';
