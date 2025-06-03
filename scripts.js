@@ -48,8 +48,8 @@
                 }
             }
 
-            // Helper function to parse date strings of various formats
-function parseDateString(dateStr) {
+    // Helper function to parse date strings of various formats
+    function parseDateString(dateStr) {
     // Handle missing or invalid date strings
     if (!dateStr || dateStr.trim() === '' || dateStr.toLowerCase() === 'unknown date') {
         return new Date(0); // Default to ancient date if missing or unknown
