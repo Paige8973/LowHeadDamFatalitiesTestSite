@@ -247,7 +247,7 @@ function parseDateString(dateStr) {
     damHeader.className = 'dam-header';
     const damInfo = document.createElement('div');
     damInfo.innerHTML = `
-      <div class="dam-name"> ${dam.name}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>Add commentMore actions
+      <div class="dam-name"> ${dam.name}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>
         <div class="dam-location"> ${dam.location}${dam.county ? ' - ' + dam.county : ''} </div>
     <div class="dam-fatalities"> ${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'} </div>
     `;
