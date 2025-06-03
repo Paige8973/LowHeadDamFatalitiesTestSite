@@ -117,10 +117,19 @@ function parseDateString(dateStr) {
 
                 searchDams: function(criteria) {
     return damData.filter(dam => {
-        
+     
+        // State Search
         if (criteria.state) {
             if (!dam.state || dam.state.toUpperCase() !== criteria.state.toUpperCase()) {
                 return false;
+            }
+        }
+
+        // River Name Search
+        if (criteria.riverName) {
+          const riverName = criteria.riverName.toLowerCase();
+           if (!dam.River_name || !dam.River_name.toLowerCase().includes(riverName)) {
+               return false;
             }
         }
         
@@ -221,6 +230,7 @@ function parseDateString(dateStr) {
                 fatalityMin: document.getElementById('fatalityMin'),
                 fatalityMax: document.getElementById('fatalityMax'),
                 keywordSearch: document.getElementById('keywordSearch'),
+                riverNameSearch: document.getElementById('riverNameSearch'),
                 applyAdvancedSearch: document.getElementById('applyAdvancedSearch'),
                 resetAdvancedSearch: document.getElementById('resetAdvancedSearch'),
                 stateFilter: document.getElementById('stateFilter'),
@@ -716,6 +726,7 @@ function parseDateString(dateStr) {
                     minFatalities: DOM.fatalityMin.value || undefined,
                     maxFatalities: DOM.fatalityMax.value || undefined,
                     keywords: DOM.keywordSearch.value || undefined,
+                    riverName: DOM.riverNameSearch.value || undefined,
                     state: DOM.stateFilter.value || undefined
                 };
 
@@ -740,6 +751,7 @@ function parseDateString(dateStr) {
                 DOM.fatalityMin.value = '';
                 DOM.fatalityMax.value = '';
                 DOM.keywordSearch.value = '';
+                DOM.riverNameSearch.value = '';
 
                 // Reset to basic search only
                 performSearch({ text: DOM.searchInput.value.toLowerCase() });
@@ -763,6 +775,15 @@ function parseDateString(dateStr) {
                         applyAdvancedSearch();
                     });
                 }
+             
+               // River Names
+               if (criteria.riverName) {
+                  addFilterTag(`River: ${criteria.riverName}`, function() {
+                      DOM.riverNameSearch.value = '';
+                      applyAdvancedSearch();
+                  });
+              }
+
 
                 // Fatality range filter
                 if (criteria.minFatalities !== undefined || criteria.maxFatalities !== undefined) {
