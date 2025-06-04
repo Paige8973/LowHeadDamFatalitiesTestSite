@@ -657,11 +657,21 @@
             }
 
             return {
-                setFilteredDams: function(dams) {
-                    filteredDams = dams;
-                    currentPage = 1;
-                    updatePageDisplay(UIController);
-                },
+              setFilteredDams: function(dams, targetPage = 1, scrollToId = null) {
+                filteredDams = dams;
+                currentPage = targetPage;
+                updatePageDisplay(UIController);
+            
+                if (scrollToId !== null) {
+                    setTimeout(() => {
+                        const element = UIController.highlightDamInList(scrollToId, true);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 100);
+                }
+            },
+
                 refresh: function() {
                     updatePageDisplay(UIController);
                 }
