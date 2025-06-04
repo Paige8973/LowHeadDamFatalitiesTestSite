@@ -437,7 +437,7 @@
             
                     if (parseInt(item.dataset.damId) === damId) {
                         item.style.backgroundColor = '#e3f2fd';
-                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
             
                         // Only expand if explicitly requested
                         if (shouldExpand) {
