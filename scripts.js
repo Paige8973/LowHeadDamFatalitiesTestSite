@@ -461,6 +461,7 @@
                                 }
                             }
                         }
+                     return item;
                     }
                 });
             },
@@ -920,10 +921,13 @@ showDamDetails: function(damId) {
         const pagedDams = allDams.slice(start, start + PAGE_SIZE);
         UIController.populateDamList(pagedDams);
 
-        // Scroll to and expand dam after rendering
-        setTimeout(() => {
-            UIController.highlightDamInList(damId, true); // Pass true to expand
-        }, 100);
+       setTimeout(() => {
+        const element = UIController.highlightDamInList(damId, true);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 100);
+
     };
 
     // Trigger refresh manually to load correct page and call custom logic
