@@ -932,7 +932,7 @@ showDamDetails: function(damId) {
     const PAGE_SIZE = 20;
     const page = Math.floor(index / PAGE_SIZE) + 1;
 
-    PaginationController.setFilteredDams(allDams);
+    PaginationController.setFilteredDams(allDams, page, damId);
     PaginationController.refresh = function() {
         const start = (page - 1) * PAGE_SIZE;
         const pagedDams = allDams.slice(start, start + PAGE_SIZE);
