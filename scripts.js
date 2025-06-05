@@ -433,38 +433,38 @@
                 highlightDamInList: function(damId, shouldExpand = false) {
                 const listItems = document.querySelectorAll('.dam-item');
             
-                listItems.forEach(item => {
-                    item.style.backgroundColor = '';
-            
-                    if (parseInt(item.dataset.damId) === damId) {
-                        item.style.backgroundColor = '#e3f2fd';
-            
-            
-                        // Only expand if explicitly requested
-                        if (shouldExpand) {
-                            const incidentsContainer = item.querySelector('.dam-incidents-container');
-                            const toggleIndicator = item.querySelector('.toggle-indicator');
-            
-                            if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
-                                const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
-            
-                                // Load dam image manually if necessary
-                                const dam = DataService.getDamById(damId);
-                                if (isVisible && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
-                                    const existingImage = item.querySelector('.dam-image');
-                                    if (!existingImage) {
-                                        const image = document.createElement('img');
-                                        image.src = `assets/images/${dam.imageUrl}`;
-                                        image.className = 'dam-image';
-                                        image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
-                                        item.insertBefore(image, incidentsContainer);
-                                    }
-                                }
-                            }
-                        }
-                     return item;
+                for (const item of listItems) {
+    item.style.backgroundColor = '';
+
+    if (parseInt(item.dataset.damId) === damId) {
+        item.style.backgroundColor = '#e3f2fd';
+
+        if (shouldExpand) {
+            const incidentsContainer = item.querySelector('.dam-incidents-container');
+            const toggleIndicator = item.querySelector('.toggle-indicator');
+
+            if (incidentsContainer && !incidentsContainer.classList.contains('visible')) {
+                const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
+
+                const dam = DataService.getDamById(damId);
+                if (isVisible && dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
+                    const existingImage = item.querySelector('.dam-image');
+                    if (!existingImage) {
+                        const image = document.createElement('img');
+                        image.src = `assets/images/${dam.imageUrl}`;
+                        image.className = 'dam-image';
+                        image.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px;';
+                        item.insertBefore(image, incidentsContainer);
                     }
-                });
+                }
+            }
+        }
+
+        return item; // ✅ Actually returns the DOM element now
+    }
+}
+return null;
+
             },
 
                 hideLoading: function() {
