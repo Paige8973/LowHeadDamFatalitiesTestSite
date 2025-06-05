@@ -935,17 +935,13 @@ showDamDetails: function(damId) {
 
     PaginationController.setFilteredDams(allDams, page, damId);
     PaginationController.refresh = function() {
-        const start = (page - 1) * PAGE_SIZE;
-        const pagedDams = allDams.slice(start, start + PAGE_SIZE);
-        UIController.populateDamList(pagedDams);
+    const start = (page - 1) * PAGE_SIZE;
+    const pagedDams = allDams.slice(start, start + PAGE_SIZE);
+    UIController.populateDamList(pagedDams);
 
-        setTimeout(() => {
-            const element = UIController.highlightDamInList(damId, true);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 100);
-    };
+    // Now call the central highlight function with scroll = true
+    AppController.highlightDam(damId, true, true);
+};
 
     PaginationController.refresh();
     MapController.focusOnDam(damId);
