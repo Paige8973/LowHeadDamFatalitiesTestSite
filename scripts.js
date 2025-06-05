@@ -55,6 +55,7 @@
         return new Date(0); // Default to ancient date if missing or unknown
     }
 
+     
     // Handle MM/DD/YYYY or MM-DD-YYYY
     const usMatch = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
     if (usMatch) {
