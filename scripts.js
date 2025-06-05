@@ -910,12 +910,21 @@
                     }
                 },
 
-                highlightDam: function(damId, shouldExpand = false) {
+                highlightDam: function(damId, shouldExpand = false, shouldScroll = false) {
                   uiCtrl.highlightDamInList(damId, shouldExpand);
+                  
+                  if (shouldScroll) {
+                      setTimeout(() => {
+                          const damItem = document.querySelector(`[data-dam-id="${damId}"]`);
+                          if (damItem) {
+                              damItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          }
+                      }, 100);
+                  }
               },
 
 showDamDetails: function(damId) {
-    const allDams = DataService.getSortedDams(); // Or getData() if not sorted
+    const allDams = DataService.getSortedDams();
     const index = allDams.findIndex(d => d.id === damId);
 
     if (index === -1) return;
@@ -923,27 +932,21 @@ showDamDetails: function(damId) {
     const PAGE_SIZE = 20;
     const page = Math.floor(index / PAGE_SIZE) + 1;
 
-    // Set the current page
-    PaginationController.setFilteredDams(allDams); // Resets to page 1
+    PaginationController.setFilteredDams(allDams);
     PaginationController.refresh = function() {
-        // Override refresh temporarily to go to correct page then expand
         const start = (page - 1) * PAGE_SIZE;
         const pagedDams = allDams.slice(start, start + PAGE_SIZE);
         UIController.populateDamList(pagedDams);
 
-       setTimeout(() => {
-        const element = UIController.highlightDamInList(damId, true);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }, 100);
-
+        setTimeout(() => {
+            const element = UIController.highlightDamInList(damId, true);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 100);
     };
 
-    // Trigger refresh manually to load correct page and call custom logic
     PaginationController.refresh();
-
-    // Also zoom on the map
     MapController.focusOnDam(damId);
 }
 
