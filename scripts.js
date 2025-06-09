@@ -143,7 +143,9 @@
 
             const nameMatch = dam.name.toLowerCase().includes(searchTerm);
             const locationMatch = dam.location.toLowerCase().includes(searchTerm);
-            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;
+            const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;            
+            const riverMatch = dam.River_name && dam.River_name.toLowerCase().includes(searchTerm);
+
 
             let stateMatch = false;
             if (dam.state) {
@@ -164,7 +166,7 @@
                 );
             }
 
-            if (!(nameMatch || locationMatch || countyMatch || stateMatch || descriptionMatch)) {
+            if (!(nameMatch || locationMatch || countyMatch || stateMatch || descriptionMatch || riverMatch)) {
                 return false;
             }
         }
