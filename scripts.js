@@ -144,7 +144,8 @@
             const nameMatch = dam.name.toLowerCase().includes(searchTerm);
             const locationMatch = dam.location.toLowerCase().includes(searchTerm);
             const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;            
-            const riverMatch = dam.River_name && dam.River_name.toLowerCase().includes(searchTerm);
+            const riverMatch = dam.River_name?.toLowerCase().includes(searchTerm) || false;
+
 
 
             let stateMatch = false;
