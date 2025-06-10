@@ -146,8 +146,6 @@
             const countyMatch = dam.county ? dam.county.toLowerCase().includes(searchTerm) : false;            
             const riverMatch = dam.River_name?.toLowerCase().includes(searchTerm) || false;
 
-
-
             let stateMatch = false;
             if (dam.state) {
                 const damStateUpper = dam.state.toUpperCase();
