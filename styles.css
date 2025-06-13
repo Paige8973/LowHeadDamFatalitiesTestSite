@@ -62,8 +62,8 @@
             color: #555;
             font-size: 0.9em;
         }
-
-          .search-bar-wrapper {
+      
+        .search-bar-wrapper {
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -92,48 +92,32 @@
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-       #searchInput:focus {
+        #searchInput:focus {
             outline: none;
             border-color: #3498db;
             box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
         }
 
-
         .add-incident-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .add-incident-btn:hover,
-        .advanced-search-btn:hover {
-            background-color: #2980b9;
-        }
-
-        #advancedSearchBtn {
-           background: none;
+           white-space: nowrap;
+           background-color: #3498db;
+           color: white;
            border: none;
-           color: #3498db;
-           font-size: 14px;
+           padding: 12px 20px;
+           border-radius: 8px;
            cursor: pointer;
-           text-decoration: underline;
-           padding: 0;
-           transition: color 0.3s;
-       }
-       #advancedSearchBtn:hover {
-           color: #2980b9;
+           font-size: 16px;
+           transition: background-color 0.3s, box-shadow 0.3s;
+           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+           flex-shrink: 0;
        }
 
-       #advancedSearchBtn.open {
-              color: #2980b9;
-              background: none;
+        .add-incident-btn:hover {
+           background-color: #2980b9;
+           box-shadow: 0 2px 8px rgba(0,0,0,0.15);
        }
 
+        
         .advanced-search-panel {
             display: none;
             background-color: white;
@@ -154,7 +138,25 @@
             margin: 0;
             color: #333;
         }
+      
+#advancedSearchBtn {
+    background: none;
+    border: none;
+    color: #3498db;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    transition: color 0.3s;
+}
+#advancedSearchBtn:hover {
+    color: #2980b9;
+}
 
+       #advancedSearchBtn.open {
+              color: #2980b9;
+              background: none;
+       }
         .close-btn {
             background: none;
             border: none;
@@ -456,22 +458,23 @@
                 margin-top: 20px;
             }
 
-        @media (max-width: 768px) {
-            .map-container {
-                height: 350px;
-            }
+@media (max-width: 768px) {
+    .map-container {
+        height: 350px;
+    }
 
-            .search-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            #searchInput {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .add-incident-btn {
-                width: 100%;
-            }
-        }
+    .search-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-container {
+        width: 100%;
+        order: 2; /* NEW: Search bar goes second on mobile */
+    }
+    
+    .add-incident-btn {
+        width: 100%;
+        order: 1; /* NEW: Button goes first (above) on mobile */
+    }
+}
