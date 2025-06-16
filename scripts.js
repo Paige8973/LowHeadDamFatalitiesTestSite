@@ -297,7 +297,10 @@
         const isVisible = toggleIncidents(incidentsContainer, toggleIndicator);
         
         if (isVisible) {
-            // Add image if it doesn't exist
+            // Zoom to dam location when expanding incidents
+            MapController.focusOnDam(dam.id, 12); // Zoom level 12
+         
+            // Add image if it exists
             if (!damItem.querySelector('.dam-image')&& dam.imageUrl && dam.imageUrl !== 'null') {
                 const image = document.createElement('img');
                 image.src = `assets/images/${dam.imageUrl}`;
