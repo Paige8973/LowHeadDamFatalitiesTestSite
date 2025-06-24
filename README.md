@@ -138,14 +138,14 @@ Reports are reviewed before being added to the database
 
 ## Data Sources:
 
-Most incident data includes validation through web sources or uploaded documentation.
-Data compiled by Brigham Young University student researchers.
-Data is entered manually when records of fatalities (like news stories or police reports) are found.
-The website data is updated through the connected Google Apps Script API, when the page is refreshed the data will be up-to-date with the spreadsheet.
+Most incident data includes validation through web sources or uploaded documentation.  
+Data compiled by Brigham Young University student researchers.  
+The data is entered manually into the google sheet when records of fatalities (like news stories or police reports) are found.  
+The data displayed on the website is updated automatically through the connected Google Apps Script API, when the page is refreshed the data will be up-to-date with the spreadsheet.  
 Sources are verified and linked for transparency and research purposes.
 
 ## Author:
 
-Written by: Paige Gordichuk
-With assistance from claude.ai
-Updated: 6/24/2025
+Written by: Paige Gordichuk  
+With assistance from claude.ai  
+Updated: 6/24/2025  
