@@ -34,7 +34,8 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
       
     2. Google Apps Script
        Access the google apps script and make a copy on your google account.
-       In the getAllData() function, replace the placeholder spreadsheet ID with the ID of your copy of the google sheet. You can find this ID in the sheet’s URL.
+       In the getAllData() function, replace the placeholder spreadsheet ID with the ID of your copy of the google sheet.   
+       You can find this ID in the sheet’s URL.
        Deploy the apps script. Click Deploy > New Deployment, select ‘Web App’, and ensure access is set to ‘Anyone’. 
        Allow google to access the spreadsheet.
        
