@@ -13,12 +13,11 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
   - Image Support: Displays relevant photos for dams and incidents when available
 
 ## Technology Stack:
-'''
-  Frontend: HTML, CSS, JavaScript
-  Mapping: Leaflet.js with OpenStreetMap tiles
-  Data Source: Google Apps Script API for real-time data fetching, Google Sheets
-  Architecture: Modular JavaScript with separate controllers for data, UI, mapping, and pagination '''
-
+  Frontend: HTML, CSS, JavaScript  
+  Mapping: Leaflet.js with OpenStreetMap tiles  
+  Data Source: Google Apps Script API for real-time data fetching, Google Sheets  
+  Architecture: Modular JavaScript with separate controllers for data, UI, mapping, and pagination 
+  
 ## How to Run the Project
   
   Prerequisites:
