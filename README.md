@@ -20,14 +20,14 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
   
 ## How to Run the Project
   
-  Prerequisites:
+  ##### Prerequisites:
   
   Modern web browser (Chrome, Firefox, Safari, Edge)  
   Internet connection (for map tiles and data fetching)  
   Github account (for hosting the website)  
   Google account (for storing the spreadsheet and launching the apps script)  
   
-  Installation Steps:
+  ##### Installation Steps:
   
     1. Google Sheet
       Access the google sheet and make a copy on your google account.
