@@ -67,28 +67,28 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
 
 ## How to Use the Project:
 
-Map Interaction
+##### Map Interaction
 
 Click on any red marker to view dam details in a popup
 Use map controls to zoom and pan across different regions
 Click "View Incidents" in popups to see detailed incident history
 
 
-Dam List
+##### Dam List
 
 Browse all dams in the scrollable list on the right side
 Click on any dam header to expand and view incident details
 Expanded dams show historical incidents sorted by date (newest first)
 
 
-Basic Search
+##### Basic Search
 
 Use the search bar to find dams by name, location, state, or county
 Results update in real-time as you type
 Search terms work across multiple fields simultaneously
 
 
-Advanced Search
+##### Advanced Search
 
 Click "Advanced Search" to access detailed filtering options
 Date Range: Filter incidents by occurrence date
@@ -99,13 +99,13 @@ Keywords: Search within incident descriptions
 Active filters are displayed as removable tags
 
 
-Sorting Options
+##### Sorting Options
 
 Sort dams by Name (A-Z), State, River, or Fatalities (highest first)
 Sorting applies to both map markers and list view
 
 
-Incident Details
+##### Incident Details
 
 Each incident includes date, fatality count, and detailed description
 Validation sources provided as clickable links (web sources and file uploads)
@@ -114,7 +114,7 @@ Documentation links for additional research
 When an incident is clicked, the map zooms in on that location
 
 
-Statistics Dashboard
+##### Statistics Dashboard
 
 View real-time statistics at the top of the page
 Total fatalities across all recorded incidents
@@ -123,14 +123,14 @@ Most dangerous dam with highest fatality count
 Average fatalities per incident site
 
 
-Pagination
+##### Pagination
 
 Navigate through large result sets using pagination controls
 20 dams displayed per page
 Page information shows current page and total pages
 
 
-Report Incident
+##### Report Incident
 
 Click the "Report Incident" button to access the Google Form
 Submit new dam incidents with proper documentation
