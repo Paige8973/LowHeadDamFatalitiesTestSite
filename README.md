@@ -54,8 +54,9 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
         The application will automatically load and fetch dam data.
 
 
+## File Structure 
+```text LowHeadDamFatalitiesTestSite/ ├── index.html # Main HTML file ├── scripts.js # Main JavaScript application ├── styles.css # Styling ├── assets/ │ ├── images/ # Dam and incident photos │ └── validation_uploads/ # Source validation files └── README.md # This file ```
 
-<pre> ## File Structure ```text LowHeadDamFatalitiesTestSite/ ├── index.html # Main HTML file ├── scripts.js # Main JavaScript application ├── styles.css # Styling ├── assets/ │ ├── images/ # Dam and incident photos │ └── validation_uploads/ # Source validation files └── README.md # This file ``` </pre>
 ## How to Use the Project:
 
 Map Interaction
