@@ -62,7 +62,8 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
 ├── assets/
 │      ├── images/ # Dam and incident photos
 │      └── validation_uploads/ # Source validation files
-└── README.md # This file ```text
+└── README.md # This file
+```
 
 ## How to Use the Project:
 
