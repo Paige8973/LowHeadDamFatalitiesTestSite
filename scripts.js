@@ -2,7 +2,7 @@
         const DataService = (function() {
             // Private variables
             let damData = [];
-            const DATA_URL = "https://script.google.com/macros/s/AKfycbxFXdFUXQ_G6zwTedKnSJ3_f3X8zj5hKZp8cDBkmMOWmZTOaU0DYgKMdYqfN6ohhsexsQ/exec";
+            const DATA_URL = "https://script.google.com/macros/s/AKfycbxbev5X2j-Jl-hu7yiEuOddIkoee4wH-ITq_R0rDYhaHDkc6EzgjFlYUTK9FhriLVuroQ/exec";
             const stateMap = {
                     'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR',
                     'california': 'CA', 'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE',
