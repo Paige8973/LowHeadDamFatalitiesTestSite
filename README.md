@@ -29,7 +29,11 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
   
   ##### Installation Steps:
   
-    1. Google Sheet
+    1. Clone the repository  
+        Follow this link for a tutorial:
+        https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository  
+        
+    2. Google Sheet
       Access the google sheet and make a copy on your google account.
       
     2. Google Apps Script
@@ -38,10 +42,14 @@ The Low Head Dam Fatalities Site is a web application designed to raise awarenes
        You can find this ID in the sheet’s URL.
        Deploy the apps script. Click Deploy > New Deployment, select ‘Web App’, and ensure access is set to ‘Anyone’. 
        Allow google to access the spreadsheet.
+       Copy the web app URL from the deployment page.
+       Navigate to the scripts.js file in the repository.  
+       Under the data layer, replace "DATA_URL" with your web app URL.
        
     3. Clone the repository
         Follow this link for a tutorial:
         https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
+        In the scripts.js file, replace the DATA_URL with your 
         
     4. Launch the website through Github
         Under settings, navigate to "Pages"
