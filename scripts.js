@@ -2,7 +2,8 @@
         const DataService = (function() {
             // Private variables
             let damData = [];
-            const DATA_URL = "https://script.google.com/macros/s/AKfycbxbev5X2j-Jl-hu7yiEuOddIkoee4wH-ITq_R0rDYhaHDkc6EzgjFlYUTK9FhriLVuroQ/exec";
+            let metaData = {};
+            const DATA_URL = "https://script.google.com/macros/s/AKfycbzcHGj4uH2fZB5JPNiRGYoc60Xt8w_aZobIkTnp2vdcEs9e5kRerFsmwqP0VW1VvP-KRQ/exec";
             const stateMap = {
                     'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR',
                     'california': 'CA', 'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE',
@@ -41,7 +42,10 @@
                         }
                     });
 
-                    return json.dams;
+                    damData = json.dams;
+                    metaData = json.meta;
+                    return damData;
+
                 } catch (error) {
                     console.error("Error fetching data:", error);
                     throw new Error("Failed to fetch dam data");
@@ -101,6 +105,11 @@
                 getData: function() {
                     return damData;
                 },
+
+                 getMeta: function() {
+                     return metaData;
+                 },
+             
 
                 getDamById: function(id) {
                     return damData.find(dam => dam.id === id);
@@ -212,7 +221,7 @@
 
         return true;
     });
-},
+},    
 
                 // Utility function exposed for date parsing elsewhere
                 parseDateString: parseDateString
@@ -487,9 +496,17 @@ return null;
                     DOMElements.loading.style.display = 'none';
                 },
 
-                updateLastUpdated: function() {
-                    DOMElements.lastUpdated.textContent = new Date().toLocaleDateString();
-                },
+                updateLastUpdated: function(dateStr) {
+                      if (dateStr && dateStr !== "Unknown") {
+                          const date = new Date(dateStr);
+                          DOMElements.lastUpdated.textContent = date.toLocaleDateString(undefined, {
+                              year: 'numeric', month: 'long', day: 'numeric'
+                          });
+                      } else {
+                          DOMElements.lastUpdated.textContent = 'Unknown';
+                      }
+                  },
+
 
                 showError: function(message) {
                     alert(message);
@@ -963,7 +980,8 @@ return null;
 
                         // Update UI state
                         uiCtrl.hideLoading();
-                        uiCtrl.updateLastUpdated();
+                        uiCtrl.updateLastUpdated(dataService.getMeta()?.lastUpdated);
+
                     } catch (error) {
                         console.error("Error initializing the application:", error);
                         uiCtrl.showError("There was an error loading the data. Please try again later.");
