@@ -29,6 +29,7 @@
                 try {
                     const response = await fetch(DATA_URL);
                     const json = await response.json();
+                  console.log("Fetched JSON:", json); // TEMP: output the response
 
                     // Process each dam to sort incidents by date (newest first)
                     json.dams.forEach(dam => {
