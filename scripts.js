@@ -225,10 +225,10 @@
 },    
 
                 // Utility function exposed for date parsing elsewhere
-                parseDateString: parseDateString
+                parseDateString: parseDateString,
              
                 // State totals
-    ,getStateTotals: function() {
+    getStateTotals: function() {
         const stateTotals = new Map();
         
         damData.forEach(dam => {
