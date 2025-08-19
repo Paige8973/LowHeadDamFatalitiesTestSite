@@ -797,10 +797,15 @@ const StateTotalsController = (function() {
             }
         });
 
-        // Sort change
-        elements.sortSelector.addEventListener('change', function() {
+        // Sort change     
+        if (elements.sortSelector) {
+          elements.sortSelector.addEventListener('change', function () {
             renderStateTotals();
-        });
+          });
+        } else {
+          console.warn("StateTotalsController: sortSelector element not found.");
+        }
+
 
         // View toggle
         elements.tableViewBtn.addEventListener('click', function() {
