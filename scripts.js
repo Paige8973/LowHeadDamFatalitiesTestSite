@@ -23,13 +23,13 @@
             // Create a reverse map from abbreviations to full names
                     const reverseStateMap = Object.fromEntries(Object.entries(stateMap).map(([name, abbr]) => [abbr.toLowerCase(), name])
                 );
+         
 
             // Private methods
             async function fetchData() {
                 try {
                     const response = await fetch(DATA_URL);
                     const json = await response.json();
-                  console.log("Fetched JSON:", json); // TEMP: output the response
 
                     // Process each dam to sort incidents by date (newest first)
                     json.dams.forEach(dam => {
@@ -338,24 +338,20 @@
                 <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 <div class="incident-description">${incident.description}</div>
                 `;
-                 // Add validation link if available - check webaddress first, then file
-                   if (incident.validation_webaddress || incident.validation_file) {
-                    cardHtml += `<div class="incident-validation">`;
+                 // Add verification link if available - check webaddress first, then file
+                   if (incident.verification_webaddress || incident.verification_file) {
+                      cardHtml += `<div class="incident-verification">`;
                 
-                    if (incident.validation_webaddress) {
-                        cardHtml += `
-                        <a href="${incident.validation_webaddress}" target="_blank">Web Source</a>
-                        `;
-                    }
-                
-                    if (incident.validation_file) {
-                        cardHtml += `
-                        <a href="assets/validation_uploads/${incident.validation_file}" target="_blank">File Source</a>
-                        `;
-                    }
-                
-                    cardHtml += `</div>`;
-                }
+                      if (incident.verification_webaddress) {
+                          cardHtml += `<a href="${incident.verification_webaddress}" target="_blank">Web Source</a>`;
+                      }
+                  
+                      if (incident.verification_file) {
+                          cardHtml += `<a href="assets/verification_uploads/${incident.verification_file}" target="_blank">File Source</a>`;
+                      }
+                  
+                      cardHtml += `</div>`;
+                  }
 
                 // Append image if available
                 if (incident.image && incident.image !== 'null' && incident.image.trim() !== '') {
