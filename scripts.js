@@ -756,8 +756,17 @@ const StateTotalsController = (function() {
         `;
         
         // Insert toggle button after statistics section
-        const statsSection = document.querySelector('.statistics-section') || 
-                             document.querySelector('#totalFatalities').closest('.stat-item').parentElement;
+        let statsSection = document.querySelector('.statistics-section');
+        if (!statsSection) {
+            const totalFatalitiesEl = document.querySelector('#totalFatalities');
+            if (totalFatalitiesEl) {
+                const statItem = totalFatalitiesEl.closest('.stat-item');
+                if (statItem) {
+                    statsSection = statItem.parentElement;
+                }
+            }
+        }
+
         
         if (statsSection) {
             statsSection.insertAdjacentElement('afterend', toggleButton);
