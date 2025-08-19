@@ -226,6 +226,58 @@
 
                 // Utility function exposed for date parsing elsewhere
                 parseDateString: parseDateString
+             
+                // State totals
+    ,getStateTotals: function() {
+        const stateTotals = new Map();
+        
+        damData.forEach(dam => {
+            const state = dam.state || 'Unknown';
+            const stateKey = state.toUpperCase();
+            
+            if (stateTotals.has(stateKey)) {
+                const current = stateTotals.get(stateKey);
+                stateTotals.set(stateKey, {
+                    ...current,
+                    totalSites: current.totalSites + 1,
+                    totalFatalities: current.totalFatalities + dam.fatalities,
+                    totalIncidents: current.totalIncidents + (dam.incidents ? dam.incidents.length : 0),
+                    sites: [...current.sites, dam]
+                });
+            } else {
+                stateTotals.set(stateKey, {
+                    state: state,
+                    stateCode: stateKey,
+                    totalSites: 1,
+                    totalFatalities: dam.fatalities,
+                    totalIncidents: dam.incidents ? dam.incidents.length : 0,
+                    sites: [dam]
+                });
+            }
+        });
+
+        // Convert to array and calculate averages
+        return Array.from(stateTotals.values())
+            .map(stateData => ({
+                ...stateData,
+                avgFatalitiesPerSite: stateData.totalSites > 0 ? 
+                    (stateData.totalFatalities / stateData.totalSites).toFixed(1) : '0.0',
+                avgFatalitiesPerIncident: stateData.totalIncidents > 0 ? 
+                    (stateData.totalFatalities / stateData.totalIncidents).toFixed(1) : '0.0'
+            }))
+            .sort((a, b) => b.totalFatalities - a.totalFatalities);
+    },
+
+    getStateNames: function() {
+        const states = new Set();
+        damData.forEach(dam => {
+            if (dam.state && dam.state.trim() !== '') {
+                states.add(dam.state);
+            }
+        });
+        return Array.from(states).sort();
+    }
+};
             };
         })();
 
@@ -624,6 +676,284 @@ return null;
                 }
             };
         })();
+// -------------------- STATE TOTALS CONTROLLER --------------------
+const StateTotalsController = (function() {
+    let isVisible = false;
+    let currentView = 'table'; // 'table' or 'chart'
+    
+    // DOM elements
+    const elements = {
+        toggleButton: null,
+        container: null,
+        viewSelector: null,
+        tableContainer: null,
+        chartContainer: null,
+        sortSelector: null
+    };
+
+    function createStateTotalsHTML() {
+        return `
+        <div id="stateTotalsContainer" class="state-totals-container" style="display: none;">
+            <div class="state-totals-header">
+                <h3>Fatalities by State</h3>
+                <div class="state-totals-controls">
+                    <select id="stateTotalsSortBy" class="form-control">
+                        <option value="fatalities">Sort by Total Fatalities</option>
+                        <option value="sites">Sort by Number of Sites</option>
+                        <option value="incidents">Sort by Total Incidents</option>
+                        <option value="avgPerSite">Sort by Avg Fatalities/Site</option>
+                        <option value="state">Sort by State Name</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button id="tableViewBtn" class="view-btn active">Table</button>
+                        <button id="chartViewBtn" class="view-btn">Chart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="stateTableContainer" class="state-table-container">
+                <table class="state-totals-table">
+                    <thead>
+                        <tr>
+                            <th>State</th>
+                            <th>Total Fatalities</th>
+                            <th>Fatal Sites</th>
+                            <th>Total Incidents</th>
+                            <th>Avg Fatalities/Site</th>
+                            <th>Avg Fatalities/Incident</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stateTotalsTableBody">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="stateChartContainer" class="state-chart-container" style="display: none;">
+                <canvas id="stateChart" width="800" height="400"></canvas>
+            </div>
+        </div>
+        `;
+    }
+
+    function initializeElements() {
+        // Create toggle button
+        const toggleButton = document.createElement('button');
+        toggleButton.id = 'stateTotalsToggle';
+        toggleButton.className = 'state-totals-toggle-btn';
+        toggleButton.innerHTML = 'Show State Totals ▼';
+        toggleButton.style.cssText = `
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        `;
+        
+        // Insert toggle button after statistics section
+        const statsSection = document.querySelector('.statistics-section') || 
+                             document.querySelector('#totalFatalities').closest('.stat-item').parentElement;
+        
+        if (statsSection) {
+            statsSection.insertAdjacentElement('afterend', toggleButton);
+            statsSection.insertAdjacentHTML('afterend', createStateTotalsHTML());
+        }
+
+        // Cache elements
+        elements.toggleButton = toggleButton;
+        elements.container = document.getElementById('stateTotalsContainer');
+        elements.tableContainer = document.getElementById('stateTableContainer');
+        elements.chartContainer = document.getElementById('stateChartContainer');
+        elements.sortSelector = document.getElementById('stateTotalsSortBy');
+        elements.tableViewBtn = document.getElementById('tableViewBtn');
+        elements.chartViewBtn = document.getElementById('chartViewBtn');
+
+        setupEventListeners();
+    }
+
+    function setupEventListeners() {
+        // Toggle visibility
+        elements.toggleButton.addEventListener('click', function() {
+            isVisible = !isVisible;
+            elements.container.style.display = isVisible ? 'block' : 'none';
+            this.innerHTML = isVisible ? 'Hide State Totals ▲' : 'Show State Totals ▼';
+            
+            if (isVisible) {
+                renderStateTotals();
+            }
+        });
+
+        // Sort change
+        elements.sortSelector.addEventListener('change', function() {
+            renderStateTotals();
+        });
+
+        // View toggle
+        elements.tableViewBtn.addEventListener('click', function() {
+            currentView = 'table';
+            elements.tableContainer.style.display = 'block';
+            elements.chartContainer.style.display = 'none';
+            this.classList.add('active');
+            elements.chartViewBtn.classList.remove('active');
+        });
+
+        elements.chartViewBtn.addEventListener('click', function() {
+            currentView = 'chart';
+            elements.tableContainer.style.display = 'none';
+            elements.chartContainer.style.display = 'block';
+            this.classList.add('active');
+            elements.tableViewBtn.classList.remove('active');
+            renderChart();
+        });
+    }
+
+    function renderStateTotals() {
+        const stateTotals = DataService.getStateTotals();
+        const sortBy = elements.sortSelector.value;
+        
+        // Sort data
+        const sortedData = [...stateTotals].sort((a, b) => {
+            switch(sortBy) {
+                case 'fatalities':
+                    return b.totalFatalities - a.totalFatalities;
+                case 'sites':
+                    return b.totalSites - a.totalSites;
+                case 'incidents':
+                    return b.totalIncidents - a.totalIncidents;
+                case 'avgPerSite':
+                    return parseFloat(b.avgFatalitiesPerSite) - parseFloat(a.avgFatalitiesPerSite);
+                case 'state':
+                    return a.state.localeCompare(b.state);
+                default:
+                    return b.totalFatalities - a.totalFatalities;
+            }
+        });
+
+        // Render table
+        const tableBody = document.getElementById('stateTotalsTableBody');
+        tableBody.innerHTML = '';
+
+        sortedData.forEach(stateData => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="state-name">${stateData.state}</td>
+                <td class="fatalities-count">${stateData.totalFatalities}</td>
+                <td class="sites-count">${stateData.totalSites}</td>
+                <td class="incidents-count">${stateData.totalIncidents}</td>
+                <td class="avg-fatalities">${stateData.avgFatalitiesPerSite}</td>
+                <td class="avg-incidents">${stateData.avgFatalitiesPerIncident}</td>
+                <td class="actions">
+                    <button onclick="StateTotalsController.filterByState('${stateData.stateCode}')" 
+                            class="filter-state-btn">
+                        View Sites
+                    </button>
+                </td>
+            `;
+            
+            // Add row styling based on fatality count
+            if (stateData.totalFatalities >= 20) {
+                row.classList.add('high-fatality-state');
+            } else if (stateData.totalFatalities >= 10) {
+                row.classList.add('medium-fatality-state');
+            }
+            
+            tableBody.appendChild(row);
+        });
+
+        // Update chart if it's visible
+        if (currentView === 'chart') {
+            renderChart();
+        }
+    }
+
+    function renderChart() {
+        const stateTotals = DataService.getStateTotals();
+        const canvas = document.getElementById('stateChart');
+        const ctx = canvas.getContext('2d');
+        
+        // Simple bar chart implementation
+        const top10States = stateTotals.slice(0, 10);
+        const maxValue = Math.max(...top10States.map(s => s.totalFatalities));
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Chart dimensions
+        const chartWidth = canvas.width - 100;
+        const chartHeight = canvas.height - 80;
+        const barWidth = chartWidth / top10States.length - 10;
+        
+        // Draw bars
+        top10States.forEach((state, index) => {
+            const barHeight = (state.totalFatalities / maxValue) * chartHeight;
+            const x = 50 + (index * (barWidth + 10));
+            const y = canvas.height - 40 - barHeight;
+            
+            // Draw bar
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(x, y, barWidth, barHeight);
+            
+            // Draw value on top
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(state.totalFatalities, x + barWidth/2, y - 5);
+            
+            // Draw state name at bottom
+            ctx.save();
+            ctx.translate(x + barWidth/2, canvas.height - 20);
+            ctx.rotate(-Math.PI/4);
+            ctx.fillText(state.state, 0, 0);
+            ctx.restore();
+        });
+        
+        // Title
+        ctx.fillStyle = '#2c3e50';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Top 10 States by Total Fatalities', canvas.width/2, 20);
+    }
+
+    function filterByState(stateCode) {
+        // Use existing search functionality to filter by state
+        const DOM = UIController.getDOMElements();
+        DOM.searchInput.value = stateCode;
+        
+        // Trigger search
+        const event = new Event('input', { bubbles: true });
+        DOM.searchInput.dispatchEvent(event);
+        
+        // Scroll to results
+        DOM.damList.scrollIntoView({ behavior: 'smooth' });
+        
+        // Optionally hide state totals to focus on results
+        if (isVisible) {
+            elements.toggleButton.click();
+        }
+    }
+
+    return {
+        initialize: function() {
+            initializeElements();
+        },
+        
+        filterByState: function(stateCode) {
+            filterByState(stateCode);
+        },
+        
+        refresh: function() {
+            if (isVisible) {
+                renderStateTotals();
+            }
+        }
+    };
+})();
+
 
         // -------------------- PAGINATION SUPPORT --------------------
         const PaginationController = (function() {
@@ -975,6 +1305,9 @@ return null;
                         // Setup event listeners
                         setupEventListeners();
 
+                         // Initialize state totals
+                        StateTotalsController.initialize();
+
                         // Update UI state
                         uiCtrl.hideLoading();
                         uiCtrl.updateLastUpdated(dataService.getMeta()?.lastUpdated);
@@ -1026,6 +1359,7 @@ showDamDetails: function(damId) {
 
         // Make AppController globally accessible for the "View Incidents" button in popups
         window.AppController = AppController;
+        window.StateTotalsController = StateTotalsController;
 
         // Open the Google Form for reporting incidents
         function openReportForm() {
