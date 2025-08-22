@@ -743,13 +743,43 @@ const StateTotalsController = (function() {
             transition: background-color 0.3s;
         `;
         
-        // Insert toggle button after statistics section
-        const statsSection = document.querySelector('.statistics-section') || 
-                             document.querySelector('#totalFatalities').closest('.stat-item').parentElement;
+        // Try multiple ways to find where to insert the button
+        let insertLocation = null;
         
-        if (statsSection) {
-            statsSection.insertAdjacentElement('afterend', toggleButton);
-            statsSection.insertAdjacentHTML('afterend', createStateTotalsHTML());
+        // Try to find statistics section
+        insertLocation = document.querySelector('.statistics-section');
+        
+        // If not found, try to find the element with totalFatalities
+        if (!insertLocation) {
+            const totalFatalitiesEl = document.getElementById('totalFatalities');
+            if (totalFatalitiesEl) {
+                // Try to find a parent container
+                insertLocation = totalFatalitiesEl.closest('.stat-item') || 
+                               totalFatalitiesEl.closest('.statistics') ||
+                               totalFatalitiesEl.parentElement;
+            }
+        }
+        
+        // If still not found, try to find any container with statistics
+        if (!insertLocation) {
+            insertLocation = document.querySelector('[class*="stat"]') || 
+                           document.querySelector('[id*="stat"]');
+        }
+        
+        // Final fallback - insert after the map or before the dam list
+        if (!insertLocation) {
+            insertLocation = document.getElementById('map') || 
+                           document.getElementById('damList');
+        }
+        
+        if (insertLocation) {
+            insertLocation.insertAdjacentElement('afterend', toggleButton);
+            insertLocation.insertAdjacentHTML('afterend', createStateTotalsHTML());
+        } else {
+            // Ultimate fallback - insert at the beginning of body
+            console.warn('Could not find suitable location for state totals. Adding to body.');
+            document.body.appendChild(toggleButton);
+            document.body.insertAdjacentHTML('beforeend', createStateTotalsHTML());
         }
 
         // Cache elements
