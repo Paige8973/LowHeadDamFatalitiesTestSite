@@ -729,19 +729,10 @@ const StateTotalsController = (function() {
         // Create toggle button
         const toggleButton = document.createElement('button');
         toggleButton.id = 'stateTotalsToggle';
-        toggleButton.className = 'state-totals-toggle-btn';
+        toggleButton.className = 'advanced-search-btn';
         toggleButton.innerHTML = 'Show State Totals ▼';
-        toggleButton.style.cssText = `
-            background: #2c3e50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        `;
+
+
         
         // Try multiple ways to find where to insert the button
         let insertLocation = null;
