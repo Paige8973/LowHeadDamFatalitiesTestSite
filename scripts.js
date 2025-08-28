@@ -764,7 +764,7 @@ const StateTotalsController = (function() {
         }
         
         if (insertLocation) {
-            insertLocation.insertAdjacentElement('afterend', toggleButton);
+            insertLocation.appendChild(toggleButton);
             insertLocation.insertAdjacentHTML('afterend', createStateTotalsHTML());
         } else {
             // Ultimate fallback - insert at the beginning of body
