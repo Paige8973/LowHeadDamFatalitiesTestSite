@@ -733,8 +733,8 @@ const StateTotalsController = (function() {
         elements.toggleButton.style.display = 'block';
         
         // Create and insert the state totals container
-        const buttonContainer = elements.toggleButton.parentElement;
-        buttonContainer.insertAdjacentHTML('afterend', createStateTotalsHTML());
+        const statsContainer = document.querySelector('.stats-container');
+        statsContainer.insertAdjacentHTML('afterend', createStateTotalsHTML());
 
         // Cache remaining elements
         elements.container = document.getElementById('stateTotalsContainer');
