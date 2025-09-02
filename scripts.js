@@ -725,56 +725,18 @@ const StateTotalsController = (function() {
         `;
     }
 
-    function initializeElements() {
-        // Create toggle button
-        const toggleButton = document.createElement('button');
-        toggleButton.id = 'stateTotalsToggle';
-        toggleButton.className = 'advanced-search-btn';
-        toggleButton.innerHTML = 'Show State Totals ▼';
+     function initializeElements() {
+        // Get the pre-placed button from HTML
+        elements.toggleButton = document.getElementById('stateTotalsToggle');
+        
+        // Show the button now that JavaScript has loaded
+        elements.toggleButton.style.display = 'block';
+        
+        // Create and insert the state totals container
+        const buttonContainer = elements.toggleButton.parentElement;
+        buttonContainer.insertAdjacentHTML('afterend', createStateTotalsHTML());
 
-
-        
-        // Try multiple ways to find where to insert the button
-        let insertLocation = null;
-        
-        // Try to find statistics section
-        insertLocation = document.querySelector('.statistics-section');
-        
-        // If not found, try to find the element with totalFatalities
-        if (!insertLocation) {
-            const totalFatalitiesEl = document.getElementById('totalFatalities');
-            if (totalFatalitiesEl) {
-                // Try to find a parent container
-                insertLocation = totalFatalitiesEl.closest('.stat-item') || 
-                               totalFatalitiesEl.closest('.statistics') ||
-                               totalFatalitiesEl.parentElement;
-            }
-        }
-        
-        // If still not found, try to find any container with statistics
-        if (!insertLocation) {
-            insertLocation = document.querySelector('[class*="stat"]') || 
-                           document.querySelector('[id*="stat"]');
-        }
-        
-        // Final fallback - insert after the map or before the dam list
-        if (!insertLocation) {
-            insertLocation = document.getElementById('map') || 
-                           document.getElementById('damList');
-        }
-        
-        if (insertLocation) {
-            insertLocation.appendChild(toggleButton);
-            insertLocation.insertAdjacentHTML('afterend', createStateTotalsHTML());
-        } else {
-            // Ultimate fallback - insert at the beginning of body
-            console.warn('Could not find suitable location for state totals. Adding to body.');
-            document.body.appendChild(toggleButton);
-            document.body.insertAdjacentHTML('beforeend', createStateTotalsHTML());
-        }
-
-        // Cache elements
-        elements.toggleButton = toggleButton;
+        // Cache remaining elements
         elements.container = document.getElementById('stateTotalsContainer');
         elements.tableContainer = document.getElementById('stateTableContainer');
         elements.sortSelector = document.getElementById('stateTotalsSortBy');
