@@ -63,14 +63,18 @@
             font-size: 0.9em;
         }
 
-/* Add this CSS to your HTML <head> section or in your CSS file */
-
 .state-totals-container {
     background: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
+}
+
+.state-totals-button-container {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .state-totals-header {
