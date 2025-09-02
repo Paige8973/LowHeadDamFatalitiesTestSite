@@ -734,7 +734,7 @@ const StateTotalsController = (function() {
         
         // Create and insert the state totals container
         const buttonContainer = document.querySelector('.state-totals-button-container');
-        statsContainer.insertAdjacentHTML('afterend', createStateTotalsHTML());
+        buttonContainer.insertAdjacentHTML('afterend', createStateTotalsHTML());
 
         // Cache remaining elements
         elements.container = document.getElementById('stateTotalsContainer');
