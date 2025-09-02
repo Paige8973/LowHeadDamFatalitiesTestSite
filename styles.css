@@ -72,10 +72,11 @@
 }
 
 .state-totals-button-container {
-    display: flex;
-    justify-content: center;  
-    margin: 15px 0 20px 0;   
+     display: flex;
+    justify-content: center;
+    margin: 15px auto 20px auto;
     width: 100%;
+    max-width: 800px;
 }
 
 .state-totals-header {
@@ -124,19 +125,22 @@
 }
 
 #stateTotalsToggle {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #007bff; 
-    color: #fff;
+    background: none;
     border: none;
-    border-radius: 6px;
+    color: #3498db;  /* Same as advanced search link */
     font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    text-decoration: underline;
+    padding: 0;
+    transition: color 0.3s;
 }
 
 #stateTotalsToggle:hover {
-    background-color: #0056b3;
+    color: #2980b9;
+}
+
+#stateTotalsToggle.open {
+    color: #2980b9;
 }
 .filter-state-btn {
     background: #3498db;
