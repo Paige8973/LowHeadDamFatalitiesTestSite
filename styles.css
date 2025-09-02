@@ -72,9 +72,9 @@
 }
 
 .state-totals-button-container {
-     display: flex;
-    justify-content: center;
-    margin: 15px auto 20px auto;
+    display: block;
+    padding-left: 20px; /* matches .stats-container's padding */
+    margin: 15px 0 20px 0;
     width: 100%;
     max-width: 800px;
 }
