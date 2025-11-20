@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outreach</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <h1>Outreach</h1>
+    </header>
+
+    <main>
+        <!-- Merch Section -->
+        <section class="merch-section">
+            <h2>Merch Store</h2>
+            <div class="item">
+                <img src="tshirt-placeholder.jpg" alt="T-Shirt" />
+                <h3>Official Outreach T-Shirt</h3>
+                <p class="price">$20.00</p>
+                <button>Add to Cart</button>
+            </div>
+        </section>
+
+        <!-- Get Involved Section -->
+        <section class="involved-section">
+            <h2>GET INVOLVED</h2>
+            <form>
+                <label for="email">Enter your email for more information:</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <!-- Stickers & Flyers Section -->
+        <section class="freebies-section">
+            <h2>Order Free Stickers & Flyers</h2>
+            <div class="item">
+                <img src="sticker-placeholder.jpg" alt="Stickers" />
+                <h3>Sticker Pack</h3>
+                <p class="price">FREE</p>
+                <button>Order</button>
+            </div>
+
+            <div class="item">
+                <img src="flyers-placeholder.jpg" alt="Flyers" />
+                <h3>Flyer Bundle</h3>
+                <p class="price">FREE</p>
+                <button>Order</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Outreach Initiative</p>
+    </footer>
+</body>
+</html>
