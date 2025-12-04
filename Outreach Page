@@ -29,18 +29,18 @@
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src=""C:\Users\jnyocum8\Downloads\DLTFHYD(Final).png"" alt="Don't Let the Flow Hold You Down" />
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/DLTFHYD(Final).png" alt="Don't Let the Flow Hold You Down" />
                 <p>Don't Let the Flow Hold You Down</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src="images/sticker2.png" alt="Sticker 2" />
-                <p>Sticker 2</p>
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/CCCD(circle).jpg" alt="Circling Currents, Certain Danger" />
+                <p>Circling Current, Certain Danger</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src="images/sticker3.png" alt="Sticker 3" />
-                <p>Sticker 3</p>
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/BTBW(SPIKY).png" alt="Beware the Backwash" />
+                <p>Beware the Backwash</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
@@ -59,7 +59,7 @@
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src="images/jacket.png" alt="Quarter Zip Jacket" />
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/QuarterZipJacket.jpeg" alt="Quarter Zip Jacket" />
                 <p>Quarter Zip Jackets</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
