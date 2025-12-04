@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Low Head Dam Safety</h1>
-        <img src="images/tagline.png" alt="Stay informed. Stay safe." class="tagline-img" />
+        <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/LHD%20Flyer%20Draft%201.png" alt="Stay informed. Stay safe." class="tagline-img" />
     </header>
 
     <section class="email-signup">
@@ -24,7 +24,7 @@
         <h2>Order Safety Merchandise</h2>
         <div class="product-grid">
             <div class="product">
-                <img src="images/tshirt.png" alt="T-Shirt" />
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/LHD%2CT-shirt.png" alt="T-Shirt" />
                 <p>T-Shirts</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
@@ -44,17 +44,17 @@
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src="" alt="Water Bottle" />
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/LHD%2CWaterbottle.png" alt="Water Bottle" />
                 <p>Water Bottles</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src="images/light.png" alt="Waterproof Light" />
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/LHD%2Clight.png" alt="Waterproof Light" />
                 <p>Waterproof Lights</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
             <div class="product">
-                <img src="images/carabiner.png" alt="Carabiner" />
+                <img src="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/LHD%2CCarabiner.png" alt="Carabiner" />
                 <p>Carabiner</p>
                 <button class="cart-btn">Add to Cart</button>
             </div>
@@ -68,7 +68,7 @@
 
     <section class="flyer-download">
         <h2>Download Safety Flyer</h2>
-        <a class="download-btn" href="flyer.pdf" download>Download PDF</a>
+        <a class="download-btn" href="https://github.com/Paige8973/LowHeadDamFatalitiesTestSite/blob/main/LHD%20Flyer%20Draft%201.png" download>Download PDF</a>
     </section>
 
     <footer>
