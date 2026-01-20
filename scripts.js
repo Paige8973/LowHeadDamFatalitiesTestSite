@@ -393,16 +393,25 @@
                    if (incident.verification_webaddress || incident.verification_file) {
                       cardHtml += `<div class="incident-verification">`;
                 
-                      if (incident.verification_webaddress) {
-                          cardHtml += `<div><a href="${incident.verification_webaddress}" target="_blank">Web Source</a></div>`;
-                      }
-                  
-                      if (incident.verification_file) {
-                          cardHtml += `<div><a href="assets/verification_uploads/${incident.verification_file}" target="_blank">File Source</a></div>`;
-                      }
-                  
-                      cardHtml += `</div>`;
-                  }
+                      if (incident.verification_webaddress || incident.verification_file) {
+    cardHtml += `<div class="incident-verification">`;
+
+    if (incident.verification_webaddress) {
+        cardHtml += `
+            <div class="verification-link">
+                <a href="${incident.verification_webaddress}" target="_blank">Web Source</a>
+            </div>`;
+    }
+
+    if (incident.verification_file) {
+        cardHtml += `
+            <div class="verification-link">
+                <a href="assets/verification_uploads/${incident.verification_file}" target="_blank">File Source</a>
+            </div>`;
+    }
+
+    cardHtml += `</div>`;
+}
 
                 // Append image if available
                 if (incident.image && incident.image !== 'null' && incident.image.trim() !== '') {
