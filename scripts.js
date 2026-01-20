@@ -394,11 +394,11 @@
                       cardHtml += `<div class="incident-verification">`;
                 
                       if (incident.verification_webaddress) {
-                          cardHtml += `<div><a href="${incident.verification_webaddress}" target="_blank">Web Source</a>`;
+                          cardHtml += `<div><a href="${incident.verification_webaddress}" target="_blank">Web Source</a></div>`;
                       }
                   
                       if (incident.verification_file) {
-                          cardHtml += `<div><a href="assets/verification_uploads/${incident.verification_file}" target="_blank">File Source</a>`;
+                          cardHtml += `<div><a href="assets/verification_uploads/${incident.verification_file}" target="_blank">File Source</a></div>`;
                       }
                   
                       cardHtml += `</div>`;
