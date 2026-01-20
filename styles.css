@@ -669,3 +669,57 @@
         order: 1; /* NEW: Button goes first (above) on mobile */
     }
 }
+/* Navigation Bar */
+.navbar {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-logo {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1rem 0;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 1.5rem 0;
+    display: block;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-link:hover {
+    border-bottom-color: #60a5fa;
+    color: #bfdbfe;
+}
+
+.nav-link.active {
+    border-bottom-color: white;
+}
+
