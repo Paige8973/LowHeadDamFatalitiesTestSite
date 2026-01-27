@@ -389,12 +389,7 @@
                 <div class="incident-fatalities">${incident.fatalities} ${incident.fatalities === 1 ? 'fatality' : 'fatalities'}</div>
                 <div class="incident-description">${incident.description}</div>
                 `;
-                 // Add verification link if available - check webaddress first, then file
-                   if (incident.verification_webaddress || incident.verification_file) {
-                      cardHtml += `<div class="incident-verification">`;
-                
-                      if (incident.verification_webaddress || incident.verification_file) {
-    cardHtml += `<div class="incident-verification">`;
+            
 
     if (incident.verification_webaddress) {
         cardHtml += `
