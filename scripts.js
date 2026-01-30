@@ -322,7 +322,7 @@
     damHeader.className = 'dam-header';
     const damInfo = document.createElement('div');
     damInfo.innerHTML = `
-      <div class="dam-name"> ${dam.name}${dam.Removed ? ' <span style="color: #d32f2f; font-weight: bold;">[REMOVED]</span>' : ''}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>
+      <div class="dam-name"> ${dam.name}${dam.Removed === 'yes' ? ' <span style="color: #d32f2f; font-weight: bold;">[REMOVED]</span>' : ''}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>
         <div class="dam-location"> ${dam.location}${dam.county ? ' - ' + dam.county : ''} </div>
     <div class="dam-fatalities"> ${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'} </div>
     `;
