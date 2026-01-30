@@ -1,4 +1,4 @@
- // -------------------- DATA LAYER --------------------
+// -------------------- DATA LAYER --------------------
         const DataService = (function() {
             // Private variables
             let damData = [];
@@ -322,7 +322,7 @@
     damHeader.className = 'dam-header';
     const damInfo = document.createElement('div');
     damInfo.innerHTML = `
-      <div class="dam-name"> ${dam.name}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>
+      <div class="dam-name"> ${dam.name}${dam.Removed ? ' <span style="color: #d32f2f; font-weight: bold;">[REMOVED]</span>' : ''}${dam.River_name && dam.River_name.trim() !== '' ? ' - ' + dam.River_name : ''} </div>
         <div class="dam-location"> ${dam.location}${dam.county ? ' - ' + dam.county : ''} </div>
     <div class="dam-fatalities"> ${dam.fatalities} ${dam.fatalities === 1 ? 'fatality' : 'fatalities'} </div>
     `;
@@ -461,7 +461,7 @@
 
             function createPopupContent(dam) {
                 let content = `<div class="marker-popup">
-                <h3>${dam.name}</h3>`;
+                <h3>${dam.name}${dam.Removed ? ' <span style="color: #d32f2f; font-weight: bold;">[REMOVED]</span>' : ''}</h3>`;
                 if (dam.imageUrl && dam.imageUrl !== 'null' && dam.imageUrl.trim() !== '') {
                     content += `<div class="popup-image" id="popup-image-${dam.id}"></div>`;
                 }
