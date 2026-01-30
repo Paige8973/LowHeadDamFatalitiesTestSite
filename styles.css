@@ -55,7 +55,7 @@
         .stat-number {
             font-size: 2.5em;
             font-weight: bold;
-            color: #e74c3c;
+            color: #3498db;
         }
 
         .stat-label {
@@ -166,7 +166,7 @@
 
 .fatalities-count {
     font-weight: 600;
-    color: #e74c3c;
+    color: #3498db;
 }
 
 .state-totals-toggle-btn:hover {
@@ -553,7 +553,7 @@
         }
 
         .incident-fatalities {
-            color: #e74c3c;
+            color: #3498db;
             font-weight: bold;
             margin-bottom: 8px;
         }
