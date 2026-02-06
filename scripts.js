@@ -597,10 +597,37 @@ return null;
             return; // Skips to the next iteration correctly
         }
 
-        const marker = L.marker([lat, lng])
+        // Create custom icon for removed dams
+        let markerOptions = {};
+        if (dam.Removed === 'yes') {
+            const removedIcon = L.divIcon({
+                className: 'custom-removed-marker',
+                html: `
+                    <div style="position: relative; width: 25px; height: 41px;">
+                        <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 8.7 12.5 28.5 12.5 28.5S25 21.2 25 12.5C25 5.6 19.4 0 12.5 0z" 
+                                  fill="#808080" stroke="#555" stroke-width="1"/>
+                        </svg>
+                        <div style="position: absolute; top: 6px; left: 50%; transform: translateX(-50%); 
+                                    width: 14px; height: 14px; border-radius: 50%; 
+                                    border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="6" cy="6" r="5" fill="none" stroke="white" stroke-width="2"/>
+                                <line x1="3" y1="3" x2="9" y2="9" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                `,
+                iconSize: [25, 41],
+                iconAnchor: [12.5, 41],
+                popupAnchor: [0, -41]
+            });
+            markerOptions.icon = removedIcon;
+        }
+
+        const marker = L.marker([lat, lng], markerOptions)
             .addTo(map)
             .bindPopup(popupContentCallback(dam));
-
         marker.damId = dam.id;
         markers.push(marker);
 
