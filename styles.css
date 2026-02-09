@@ -722,12 +722,3 @@
 .nav-link.active {
     border-bottom-color: white;
 }
-/* Custom marker for removed dams */
-.custom-removed-marker {
-    background: none;
-    border: none;
-}
-
-.custom-removed-marker div {
-    cursor: pointer;
-}
