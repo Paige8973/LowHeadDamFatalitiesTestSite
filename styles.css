@@ -691,20 +691,20 @@
 .nav-logo-container {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    padding: 1.2rem 0;
+    gap: 8px;
+    padding: 2rem 0;  /* Increased from 1.2rem to make bar taller */
 }
 
 .nav-logo {
     color: white;
-    font-size: 1.5rem;
+    font-size: 2rem;  /* Increased from 1.5rem to make it bigger */
     font-weight: 700;
     text-decoration: none;
     line-height: 1.2;
 }
 
 .nav-subtitle {
-    color: rgba(255, 255, 255, 0.9);
+    color: white;  /* Changed from rgba(255, 255, 255, 0.9) to pure white */
     font-size: 1rem;
     font-weight: 400;
     margin: 0;
@@ -747,15 +747,15 @@
     }
     
     .nav-logo-container {
-        padding: 1rem 0 0.5rem 0;
+        padding: 1.5rem 0 0.5rem 0;
     }
     
     .nav-logo {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     
     .nav-subtitle {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
     
     .nav-menu {
