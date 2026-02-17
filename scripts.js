@@ -594,19 +594,61 @@ return null;
         // Skip if lat/lng are not valid numbers
         if (isNaN(lat) || isNaN(lng)) {
             console.warn(`Skipping dam with invalid coordinates:`, dam);
-            return; // Skips to the next iteration correctly
+            return;
         }
 
-        const marker = L.marker([lat, lng])
-            .addTo(map)
-            .bindPopup(popupContentCallback(dam));
+        let marker;
+        
+        // Check if dam is removed
+        if (dam.Removed === 'yes') {
+            // Create custom icon for removed dams - gray pin with red circle/slash
+            const removedIcon = L.divIcon({
+                className: 'custom-marker-removed',
+                html: `
+                    <div style="position: relative; width: 25px; height: 41px;">
+                        <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Gray pin -->
+                            <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 8.4 12.5 28.5 12.5 28.5S25 20.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#808080"/>
+                            <circle cx="12.5" cy="12.5" r="4" fill="white"/>
+                        </svg>
+                        <!-- Red circle with slash on top -->
+                        <svg width="20" height="20" viewBox="0 0 20 20" style="position: absolute; top: -2px; right: -2px;" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="9" fill="white" stroke="#d32f2f" stroke-width="2"/>
+                            <line x1="3" y1="3" x2="17" y2="17" stroke="#d32f2f" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                `,
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34]
+            });
+            
+            marker = L.marker([lat, lng], { icon: removedIcon }).addTo(map);
+        } else {
+            // Create custom icon for active dams - gray pin
+            const grayIcon = L.divIcon({
+                className: 'custom-marker-gray',
+                html: `
+                    <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 8.4 12.5 28.5 12.5 28.5S25 20.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#808080"/>
+                        <circle cx="12.5" cy="12.5" r="4" fill="white"/>
+                    </svg>
+                `,
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34]
+            });
+            
+            marker = L.marker([lat, lng], { icon: grayIcon }).addTo(map);
+        }
 
+        marker.bindPopup(popupContentCallback(dam));
         marker.damId = dam.id;
         markers.push(marker);
 
         // Marker click behavior
         marker.on('click', function() {
-            markerClickCallback(dam.id, false); // Pass false to not expand
+            markerClickCallback(dam.id, false);
 
             // Lazy-load image
             setTimeout(() => {
