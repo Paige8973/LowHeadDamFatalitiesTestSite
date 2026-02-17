@@ -625,21 +625,8 @@ return null;
             
             marker = L.marker([lat, lng], { icon: removedIcon }).addTo(map);
         } else {
-            // Create custom icon for active dams - gray pin
-            const grayIcon = L.divIcon({
-                className: 'custom-marker-gray',
-                html: `
-                    <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 8.4 12.5 28.5 12.5 28.5S25 20.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#808080"/>
-                        <circle cx="12.5" cy="12.5" r="4" fill="white"/>
-                    </svg>
-                `,
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34]
-            });
-            
-            marker = L.marker([lat, lng], { icon: grayIcon }).addTo(map);
+            // Use default blue Leaflet marker for active dams
+            marker = L.marker([lat, lng]).addTo(map);
         }
 
         marker.bindPopup(popupContentCallback(dam));
