@@ -763,3 +763,9 @@
         padding-bottom: 0.5rem;
     }
 }
+
+/* Custom marker styles */
+.custom-marker-removed {
+    background: none !important;
+    border: none !important;
+}
