@@ -684,27 +684,28 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;  /* Changed from center to stretch */
     padding: 0 20px;
+    min-height: 100%;  /* Ensure full height */
 }
 
 .nav-logo-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 1.2rem 0;  
+    padding: 1.2rem 0;  /* Reduced from 1.5rem */
 }
 
 .nav-logo {
     color: white;
-    font-size: 2rem;  /* Increased from 1.5rem to make it bigger */
+    font-size: 2rem;
     font-weight: 700;
     text-decoration: none;
     line-height: 1.2;
 }
 
 .nav-subtitle {
-    color: white;  /* Changed from rgba(255, 255, 255, 0.9) to pure white */
+    color: white;
     font-size: 1rem;
     font-weight: 400;
     margin: 0;
@@ -717,13 +718,20 @@
     margin: 0;
     padding: 0;
     gap: 2rem;
+    align-items: stretch;  /* Make menu items stretch to full height */
+}
+
+.nav-menu li {
+    display: flex;
+    align-items: stretch;  /* Stretch list items */
 }
 
 .nav-link {
     color: white;
     text-decoration: none;
-    padding: 1.5rem 0;
-    display: block;
+    padding: 0 0 0.5rem 0;  /* Changed padding - only bottom padding */
+    display: flex;
+    align-items: flex-end;  /* Align links to bottom */
     font-weight: 500;
     transition: all 0.3s ease;
     border-bottom: 3px solid transparent;
@@ -747,7 +755,7 @@
     }
     
     .nav-logo-container {
-        padding: 1.5rem 0 0.5rem 0;
+        padding: 1rem 0 0.5rem 0;
     }
     
     .nav-logo {
