@@ -607,7 +607,7 @@ addMarkers: function(dams, popupContentCallback, markerClickCallback) {
                 html: `
                     <div style="position: relative; width: 25px; height: 41px;">
                         <img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" 
-                             style="width: 25px; height: 41px; filter: grayscale(100%) brightness(0.7);">
+                             style="width: 25px; height: 41px; filter: grayscale(100%) brightness(1.2);">
                         <!-- Red circle with slash centered on top -->
                         <svg width="18" height="18" viewBox="0 0 18 18" 
                              style="position: absolute; top: 2px; left: 50%; transform: translateX(-50%);" 
