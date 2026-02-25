@@ -729,12 +729,12 @@
 .nav-link {
     color: white;
     text-decoration: none;
-    padding: 0 0 0.5rem 0;  /* Changed padding - only bottom padding */
-    display: flex;
-    align-items: flex-end;  /* Align links to bottom */
+    padding: 0 0 3px 0;  /* Only bottom padding for the border */
+    display: block;
     font-weight: 500;
     transition: all 0.3s ease;
     border-bottom: 3px solid transparent;
+    position: relative;
 }
 
 .nav-link:hover {
@@ -744,6 +744,25 @@
 
 .nav-link.active {
     border-bottom-color: white;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+}
+
+.nav-link.active {
+    border-bottom-color: transparent;  /* Add this */
+}
+
+.nav-link:hover {
+    color: #bfdbfe;
+    border-bottom-color: transparent;  /* Add this */
 }
 
 /* Responsive design for mobile */
