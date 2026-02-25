@@ -582,7 +582,7 @@ return null;
                     return map;
                 },
 
-                addMarkers: function(dams, popupContentCallback, markerClickCallback) {
+               addMarkers: function(dams, popupContentCallback, markerClickCallback) {
     // Clear any existing markers
     markers.forEach(marker => marker.remove());
     markers = [];
@@ -607,14 +607,46 @@ return null;
                 html: `
                     <div style="position: relative; width: 25px; height: 41px;">
                         <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Gray pin -->
-                            <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 8.4 12.5 28.5 12.5 28.5S25 20.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#808080"/>
-                            <circle cx="12.5" cy="12.5" r="4" fill="white"/>
+                            <!-- Gray pin with gradient and shadow for 3D effect -->
+                            <defs>
+                                <linearGradient id="grayGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#6b7280;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#9ca3af;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#6b7280;stop-opacity:1" />
+                                </linearGradient>
+                                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+                                    <feOffset dx="1" dy="2" result="offsetblur"/>
+                                    <feComponentTransfer>
+                                        <feFuncA type="linear" slope="0.3"/>
+                                    </feComponentTransfer>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 8.4 12.5 28.5 12.5 28.5S25 20.9 25 12.5C25 5.6 19.4 0 12.5 0z" 
+                                  fill="url(#grayGradient)" filter="url(#shadow)" stroke="#4b5563" stroke-width="0.5"/>
+                            <circle cx="12.5" cy="12.5" r="4" fill="white" stroke="#4b5563" stroke-width="0.5"/>
                         </svg>
                         <!-- Red circle with slash on top -->
                         <svg width="20" height="20" viewBox="0 0 20 20" style="position: absolute; top: -2px; right: -2px;" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10" cy="10" r="9" fill="white" stroke="#d32f2f" stroke-width="2"/>
-                            <line x1="3" y1="3" x2="17" y2="17" stroke="#d32f2f" stroke-width="2.5"/>
+                            <defs>
+                                <filter id="redShadow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="0.5"/>
+                                    <feOffset dx="0" dy="1" result="offsetblur"/>
+                                    <feComponentTransfer>
+                                        <feFuncA type="linear" slope="0.4"/>
+                                    </feComponentTransfer>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <circle cx="10" cy="10" r="9" fill="white" stroke="#d32f2f" stroke-width="2" filter="url(#redShadow)"/>
+                            <line x1="3" y1="3" x2="17" y2="17" stroke="#d32f2f" stroke-width="2.5" stroke-linecap="round"/>
                         </svg>
                     </div>
                 `,
