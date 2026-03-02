@@ -579,7 +579,48 @@ return null;
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     }).addTo(map);
 
+                    // Add legend control
+                    this.addLegend();
+
                     return map;
+                },
+
+                addLegend: function() {
+                    const legend = L.control({ position: 'bottomright' });
+
+                    legend.onAdd = function(map) {
+                        const div = L.DomUtil.create('div', 'map-legend');
+                        div.innerHTML = `
+                            <div class="legend-title">Dam Status</div>
+                            <div class="legend-item">
+                                <label>
+                                    <input type="checkbox" id="showActive" checked>
+                                    <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png" width="15" height="24">
+                                    Active Dams
+                                </label>
+                            </div>
+                            <div class="legend-item">
+                                <label>
+                                    <input type="checkbox" id="showRemoved" checked>
+                                    <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png" width="15" height="24">
+                                    Removed Dams
+                                </label>
+                            </div>
+                        `;
+                        return div;
+                    };
+
+                    legend.addTo(map);
+
+                    // Add event listeners for checkboxes
+                    setTimeout(() => {
+                        document.getElementById('showActive').addEventListener('change', function() {
+                            MapController.filterMarkersByStatus();
+                        });
+                        document.getElementById('showRemoved').addEventListener('change', function() {
+                            MapController.filterMarkersByStatus();
+                        });
+                    }, 100);
                 },
 
 addMarkers: function(dams, popupContentCallback, markerClickCallback) {
@@ -630,6 +671,7 @@ addMarkers: function(dams, popupContentCallback, markerClickCallback) {
 
         marker.bindPopup(popupContentCallback(dam));
         marker.damId = dam.id;
+        marker.isRemoved = dam.Removed === 'yes';
         markers.push(marker);
 
         // Marker click behavior
@@ -659,9 +701,26 @@ addMarkers: function(dams, popupContentCallback, markerClickCallback) {
 },
 
 
-                filterMarkers: function(visibleDamIds) {
+               filterMarkers: function(visibleDamIds) {
                     markers.forEach(marker => {
                         if (visibleDamIds.includes(marker.damId)) {
+                            if (!map.hasLayer(marker)) {
+                                marker.addTo(map);
+                            }
+                        } else {
+                            marker.remove();
+                        }
+                    });
+                },
+
+                filterMarkersByStatus: function() {
+                    const showActive = document.getElementById('showActive')?.checked ?? true;
+                    const showRemoved = document.getElementById('showRemoved')?.checked ?? true;
+
+                    markers.forEach(marker => {
+                        const shouldShow = (marker.isRemoved && showRemoved) || (!marker.isRemoved && showActive);
+                        
+                        if (shouldShow) {
                             if (!map.hasLayer(marker)) {
                                 marker.addTo(map);
                             }
