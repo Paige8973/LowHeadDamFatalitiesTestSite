@@ -594,6 +594,13 @@ return null;
                             <div class="legend-title">Dam Status</div>
                             <div class="legend-item">
                                 <label>
+                                    <input type="checkbox" id="showActive" checked>
+                                    <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png" width="15" height="24">
+                                    Active Dams
+                                </label>
+                            </div>
+                            <div class="legend-item">
+                                <label>
                                     <input type="checkbox" id="showRemoved" checked>
                                     <div style="position: relative; width: 15px; height: 24px; display: inline-block;">
                                         <svg width="15" height="24" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
@@ -602,7 +609,7 @@ return null;
                                         </svg>
                                         <div style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); 
                                                     width: 8px; height: 8px; border-radius: 50%; 
-                                                    border: 1px solid white; display: flex; align-items: center; justify-content: center;">
+                                                    border: 2px solid white; display: flex; align-items: center; justify-content: center;">
                                             <svg width="7" height="7" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="6" cy="6" r="5" fill="none" stroke="white" stroke-width="2"/>
                                                 <line x1="3" y1="3" x2="9" y2="9" stroke="white" stroke-width="2"/>
