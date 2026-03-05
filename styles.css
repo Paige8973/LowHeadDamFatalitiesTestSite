@@ -841,3 +841,17 @@
 .resource-btn:hover {
     background-color: #163a5c;
 }
+
+.report-btn {
+    display: inline-block;
+    padding: 14px 20px;
+    background-color: #c62828;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.report-btn:hover {
+    background-color: #9b1c1c;
+}
