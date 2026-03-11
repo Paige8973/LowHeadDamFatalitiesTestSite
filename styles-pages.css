@@ -74,7 +74,7 @@ header {
 section {
     padding: 2rem 1rem;
     max-width: 900px;
-    margin: auto;
+    margin: 0 auto;  /* Changed from 'auto' to '0 auto' to push to top */
 }
 
 h2 {
@@ -127,4 +127,20 @@ footer {
     font-size: 0.9em;
     color: #777;
     background-color: white;
+}
+
+/* Information page layout */
+.info-intro,
+.resource-buttons {
+    padding: 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;  /* Centers the content but aligns it at top */
+}
+
+.info-intro {
+    padding-bottom: 1rem;  /* Reduce bottom padding */
+}
+
+.resource-buttons {
+    padding-top: 1rem;  /* Reduce top padding to bring it closer */
 }
