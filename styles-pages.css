@@ -25,13 +25,25 @@
 .resource-btn:hover {
     background-color: #2980b9;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.resource-btn:hover {
-    background-color: #163a5c;
-}
 
 /*contact-page.html styles*/
+
+/* Push sections to top instead of center */
+.contact-section,
+.report-fatality {
+    padding: 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;  /* Changed from 'auto' to '0 auto' to align at top */
+}
+
+.contact-section {
+    padding-bottom: 1rem;  /* Less space between sections */
+}
+
+.report-fatality {
+    padding-top: 1rem;  /* Less space between sections */
+}
+
 .report-btn {
     display: inline-block;
     padding: 14px 20px;
@@ -117,7 +129,8 @@ h2 {
     padding: 1rem;
     text-align: center;
     border-radius: 8px;
-    box-shadow: 0
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Complete this line */
+}
 
 /* Footer - push to bottom */
 footer {
