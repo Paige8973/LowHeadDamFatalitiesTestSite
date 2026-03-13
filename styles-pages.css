@@ -1,6 +1,20 @@
-/*information-page.html*/
+/* =======================================================
+PAGE LAYOUT
+Keeps page content aligned with homepage width
+======================================================= */
 
-/* Resource grid - add gap between buttons */
+.page-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+
+/* =======================================================
+INFORMATION PAGE
+======================================================= */
+
+/* Resource grid */
 .resource-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -8,7 +22,7 @@
     margin-top: 20px;
 }
 
-/* Resource buttons - match home page style */
+/* Resource buttons (matches homepage buttons) */
 .resource-btn {
     display: block;
     text-align: center;
@@ -27,11 +41,11 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.resource-btn:hover {
-    background-color: #163a5c;
-}
 
-/*contact-page.html styles*/
+/* =======================================================
+CONTACT PAGE
+======================================================= */
+
 .report-btn {
     display: inline-block;
     padding: 14px 20px;
@@ -46,23 +60,10 @@
     background-color: #9b1c1c;
 }
 
-/*outreach-page.html styles*/
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    color: #222;
-}
 
-header {
-    background: #1e4d7b;
-    color: white;
-    padding: 2rem 1rem;
-    text-align: center;
-}
+/* =======================================================
+OUTREACH PAGE
+======================================================= */
 
 .tagline-img {
     max-width: 300px;
@@ -71,8 +72,9 @@ header {
     margin-top: 0.5rem;
 }
 
+/* Sections */
 section {
-    padding: 2rem 1rem;
+    padding: 2rem 0;
     max-width: 900px;
     margin: auto;
 }
@@ -81,7 +83,11 @@ h2 {
     margin-bottom: 1rem;
 }
 
-/* Email Signup */
+
+/* =======================================================
+EMAIL SIGNUP
+======================================================= */
+
 .email-signup form {
     display: flex;
     gap: 1rem;
@@ -104,7 +110,11 @@ h2 {
     cursor: pointer;
 }
 
-/* Products */
+
+/* =======================================================
+PRODUCT GRID
+======================================================= */
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -117,9 +127,14 @@ h2 {
     padding: 1rem;
     text-align: center;
     border-radius: 8px;
-    box-shadow: 0
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-/* Footer - push to bottom */
+
+/* =======================================================
+FOOTER
+======================================================= */
+
 footer {
     text-align: center;
     margin-top: auto;
