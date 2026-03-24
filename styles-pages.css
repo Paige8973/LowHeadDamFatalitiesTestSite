@@ -1,12 +1,9 @@
 /* =======================================================
-PAGE LAYOUT
-Keeps page content aligned with homepage width
+PAGE CONTAINER (matches main layout spacing)
 ======================================================= */
 
 .page-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 30px 20px;
+    padding: 20px;
 }
 
 
@@ -22,11 +19,11 @@ INFORMATION PAGE
     margin-top: 20px;
 }
 
-/* Resource buttons (matches homepage buttons) */
+/* Resource buttons (match main button style) */
 .resource-btn {
     display: block;
     text-align: center;
-    padding: 15px 20px;
+    padding: 12px 20px;
     background-color: #3498db;
     color: white;
     text-decoration: none;
@@ -48,16 +45,18 @@ CONTACT PAGE
 
 .report-btn {
     display: inline-block;
-    padding: 14px 20px;
+    padding: 12px 20px;
     background-color: #c62828;
     color: white;
     text-decoration: none;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .report-btn:hover {
     background-color: #9b1c1c;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 
@@ -72,11 +71,9 @@ OUTREACH PAGE
     margin-top: 0.5rem;
 }
 
-/* Sections */
+/* Sections (aligned with main spacing, no width override) */
 section {
     padding: 2rem 0;
-    max-width: 900px;
-    margin: auto;
 }
 
 h2 {
@@ -92,22 +89,30 @@ EMAIL SIGNUP
     display: flex;
     gap: 1rem;
     max-width: 500px;
+    flex-wrap: wrap;
 }
 
 .email-signup input {
     flex: 1;
+    min-width: 200px;
     padding: 0.7rem;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
 
 .email-signup button {
     padding: 0.7rem 1.5rem;
-    background: #1e4d7b;
+    background: #3498db;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+}
+
+.email-signup button:hover {
+    background: #2980b9;
 }
 
 
@@ -117,7 +122,7 @@ PRODUCT GRID
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 1rem;
 }
 
@@ -132,14 +137,15 @@ PRODUCT GRID
 
 
 /* =======================================================
-FOOTER
+MOBILE IMPROVEMENTS
 ======================================================= */
 
-footer {
-    text-align: center;
-    margin-top: auto;
-    padding: 20px;
-    font-size: 0.9em;
-    color: #777;
-    background-color: white;
+@media (max-width: 768px) {
+    .email-signup form {
+        flex-direction: column;
+    }
+
+    .resource-btn {
+        padding: 14px;
+    }
 }
