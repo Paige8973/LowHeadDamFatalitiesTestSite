@@ -248,8 +248,23 @@
            background-color: #2980b9;
            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
        }
+        .report-btn {
+          display: inline-block;
+          background-color: #c62828;
+          color: white;
+          padding: 14px 24px;
+          text-decoration: none;
+          font-size: 1rem;
+          font-weight: bold;
+          border-radius: 8px;
+          margin-top: 15px;
+          transition: background-color 0.3s ease;
+        }
 
-
+        .report-btn:hover {
+         background-color: #8e0000;
+        }
+ 
         .advanced-search-panel {
             display: none;
             background-color: white;
