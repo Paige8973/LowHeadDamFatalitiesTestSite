@@ -257,7 +257,7 @@
        }
 
         .add-incident-btn:hover {
-           background-color: #2980b9;
+           background-color: #8e0000;
            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
        }
         .report-btn {
