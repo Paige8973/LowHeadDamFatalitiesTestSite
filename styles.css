@@ -244,7 +244,7 @@
 
         .add-incident-btn {
            white-space: nowrap;
-           background-color: #3498db;
+           background-color: #c62828;
            color: white;
            border: none;
            padding: 12px 20px;
@@ -257,7 +257,7 @@
        }
 
         .add-incident-btn:hover {
-           background-color: #8e0000;
+           background-color: #2980b9;
            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
        }
         .report-btn {
