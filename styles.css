@@ -892,3 +892,31 @@ footer {
     padding: 20px;
     color: #777;
 }
+
+.contact-section,
+.report-fatality {
+    margin-bottom: 40px;
+}
+
+.contact-section h2,
+.report-fatality h2 {
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.contact-section h3 {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.contact-section p,
+.report-fatality p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.report-btn {
+    margin-top: 10px;
+}
