@@ -1036,7 +1036,7 @@ footer {
 }
 
 .product p {
-    font-weight: 600;
+    font-weight: 400;
     color: #333;
     margin-bottom: 16px;
     flex-grow: 1;
@@ -1065,7 +1065,7 @@ footer {
     text-decoration: none;
     padding: 14px 24px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 400;
     transition: background-color 0.3s;
 }
 
