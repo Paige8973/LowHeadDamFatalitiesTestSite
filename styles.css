@@ -920,3 +920,12 @@ footer {
 .report-btn {
     margin-top: 10px;
 }
+
+.contact-section,
+.report-fatality {
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    text-align: left;
+}
