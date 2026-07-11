@@ -1276,13 +1276,11 @@ const StateTotalsController = (function() {
                         mapCtrl.initialize(DOM.map);
 
                         // Add markers to map
-                       mapCtrl.addMarkers(
-    dataService.getData(),
-    uiCtrl.createPopupContent,
-    this.highlightDam
-);
-
-mapCtrl.addLegend();
+                        mapCtrl.addMarkers(
+                            dataService.getData(),
+                            uiCtrl.createPopupContent,
+                            this.highlightDam
+                        );
 
                         // Calculate and display statistics
                         const stats = calculateStatistics();
