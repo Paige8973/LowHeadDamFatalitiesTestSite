@@ -149,3 +149,29 @@ MOBILE IMPROVEMENTS
         padding: 14px;
     }
 }
+
+
+.video-section {
+    padding: 1rem 1rem 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    display: block;
+}
+
+/* Make video responsive on smaller screens */
+@media (max-width: 768px) {
+    .video-container iframe {
+        height: 315px;
+    }
+}
