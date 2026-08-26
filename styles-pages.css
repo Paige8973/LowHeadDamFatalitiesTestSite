@@ -153,25 +153,25 @@ MOBILE IMPROVEMENTS
 
 .video-section {
     padding: 1rem 1rem 2rem 1rem;
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 700px;  /* Narrower overall width */
+    margin: 0 auto 2rem auto;
 }
 
 .video-container {
     position: relative;
     width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
+    height: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;
 }
 
 .video-container iframe {
-    display: block;
-}
-
-/* Make video responsive on smaller screens */
-@media (max-width: 768px) {
-    .video-container iframe {
-        height: 315px;
-    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
